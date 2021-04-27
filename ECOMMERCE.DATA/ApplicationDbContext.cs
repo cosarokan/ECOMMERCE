@@ -439,7 +439,7 @@ namespace ECOMMERCE.DATA
                     .UseIdentityColumn();
 
                 entity.Property(e => e.CustomerId)
-                    .HasColumnName("Brand_Model_ID")
+                    .HasColumnName("Customer_ID")
                     .IsRequired();
 
                 entity.Property(e => e.ProductId)
@@ -463,12 +463,10 @@ namespace ECOMMERCE.DATA
 
                 entity.Property(e => e.CommentDate)
                     .HasColumnName("CommentDate")
-                    .IsRequired()
                     .IsUnicode(false);
 
                 entity.Property(e => e.IsApproved)
                     .HasColumnName("IsApproved")
-                    .IsRequired()
                     .IsUnicode(false);
 
                 entity.Property(e => e.ApprovedDate)
@@ -693,18 +691,17 @@ namespace ECOMMERCE.DATA
                     .IsRequired();
 
                 entity.Property(e => e.CreatedById)
-                    .HasColumnName("CreatedBy")
+                    .HasColumnName("CreatedByID")
                     .IsRequired();
 
                 entity.Property(e => e.Value)
                     .HasColumnName("Value")
-                    .HasMaxLength(50)
-                    .IsRequired();
+                    .HasMaxLength(50);
+
 
                 entity.Property(e => e.ValueReferenceModelId)
                     .HasColumnName("Value_Reference_Model_ID")
-                    .HasMaxLength(50)
-                    .IsRequired();
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnName("CreatedDate")

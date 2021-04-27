@@ -33,10 +33,13 @@ namespace ECOMMERCE.WEBUI.Controllers
         private readonly IBrandModelBusinessService _brandModelBusinessService;
         private readonly IShoppingCartBusinessService _shoppingCartBusinessService;
         private readonly IOrderStatusesBusinessService _orderStatusesBusinessService;
+        private readonly IOrderDetailsBusinessService _orderDetailsBusinessService;
+        private readonly IProductPropertyValuesBusinessService _productPropertyValuesBusinessService;
 
         public HomeController(ICategoriesBusinessService categoriesBusinessService, ISubCategoriesBusinessService subCategoriesBusinessService, 
             IProductPropertiesBusinessService productPropertiesBusinessService,
-            IProductBusinessService productBusinessService, ICustomersBusinessService customersBusinessService, IUsersBusinessService usersBusinessService, IPaymentTypesBusinessService paymentTypesBusinessService, IOrdersBusinessService ordersBusinessService, ICommentBusinessService commentBusinessService, IProductTypesBusinessService productTypesBusinessService, ICityBusinessService cityBusinessService, IDistrictBusinessService districtBusinessService, INeighborhoodBusinessService neighborhoodBusinessService, IBrandBusinessService brandBusinessService, IBrandModelBusinessService brandModelBusinessService, IShoppingCartBusinessService shoppingCartBusinessService, IOrderStatusesBusinessService orderStatusesBusinessService)
+            IProductBusinessService productBusinessService, ICustomersBusinessService customersBusinessService, IUsersBusinessService usersBusinessService, IPaymentTypesBusinessService paymentTypesBusinessService, IOrdersBusinessService ordersBusinessService, ICommentBusinessService commentBusinessService, IProductTypesBusinessService productTypesBusinessService, ICityBusinessService cityBusinessService, IDistrictBusinessService districtBusinessService, INeighborhoodBusinessService neighborhoodBusinessService, IBrandBusinessService brandBusinessService, IBrandModelBusinessService brandModelBusinessService, IShoppingCartBusinessService shoppingCartBusinessService, IOrderStatusesBusinessService orderStatusesBusinessService, IOrderDetailsBusinessService orderDetailsBusinessService,
+            IProductPropertyValuesBusinessService productPropertyValuesBusinessService)
         {
             _brandBusinessService = brandBusinessService;
             _brandModelBusinessService = brandModelBusinessService;
@@ -55,6 +58,8 @@ namespace ECOMMERCE.WEBUI.Controllers
             _neighborhoodBusinessService = neighborhoodBusinessService;
             _shoppingCartBusinessService = shoppingCartBusinessService;
             _orderStatusesBusinessService = orderStatusesBusinessService;
+            _orderDetailsBusinessService = orderDetailsBusinessService;
+            _productPropertyValuesBusinessService = productPropertyValuesBusinessService;
         }
 
         public IActionResult Index()
@@ -76,6 +81,8 @@ namespace ECOMMERCE.WEBUI.Controllers
             List<Neighborhood> neighborhood = _neighborhoodBusinessService.GetAll();
             List<ShoppingCart> shoppingCart = _shoppingCartBusinessService.GetAll();
             List<OrderStatuses> orderStatuses = _orderStatusesBusinessService.GetAll();
+            List<OrderDetails> orderDetails = _orderDetailsBusinessService.GetAll();
+            List<ProductPropertyValues> productPropertyValues = _productPropertyValuesBusinessService.GetAll();
 
 
             homeViewModel.Categories = categories.Select(x => new CategoryViewModel

@@ -691,7 +691,7 @@ namespace ECOMMERCE.DATA
                     .IsRequired();
 
                 entity.Property(e => e.CreatedById)
-                    .HasColumnName("CreatedByID")
+                    .HasColumnName("CreatedBy")
                     .IsRequired();
 
                 entity.Property(e => e.Value)

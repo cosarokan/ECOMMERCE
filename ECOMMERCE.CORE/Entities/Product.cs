@@ -25,7 +25,6 @@ namespace ECOMMERCE.CORE.Entities
         public virtual BrandModels BrandModel { get; set; }
         public virtual List<ProductImages> ProductImages { get; set; }
         public virtual List<Comment> Comments { get; set; }
-        public virtual List<ProductPropertyValues> ProductPropertyValues { get; set; }
         public virtual List<OrderDetails> OrderDetails { get; set; }
         public virtual List<ShoppingCart> ShoppingCarts { get; set; }
     }

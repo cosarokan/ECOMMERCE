@@ -698,7 +698,6 @@ namespace ECOMMERCE.DATA
                     .HasColumnName("Value")
                     .HasMaxLength(50);
 
-
                 entity.Property(e => e.ValueReferenceModelId)
                     .HasColumnName("Value_Reference_Model_ID")
                     .HasMaxLength(50);

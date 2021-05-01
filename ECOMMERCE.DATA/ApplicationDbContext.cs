@@ -5,7 +5,7 @@ namespace ECOMMERCE.DATA
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
@@ -27,7 +27,9 @@ namespace ECOMMERCE.DATA
         public virtual DbSet<ProductPropertyValues> ProductPropertyValues { get; set; }
         public virtual DbSet<ProductTypes> ProductTypes { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<SubCategories> SubCategories { get; set; }
+        public virtual DbSet<Sliders> Sliders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -414,6 +416,12 @@ namespace ECOMMERCE.DATA
                     .HasMaxLength(3)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Image)
+                    .HasColumnName("Image")
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.StockQuantity)
                     .HasColumnName("StockQuantity")
                     .IsRequired()
@@ -783,6 +791,49 @@ namespace ECOMMERCE.DATA
                 entity.Property(e => e.IsActive)
                     .HasColumnName("IsActive")
                     .IsRequired()
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnName("CreatedDate")
+                    .IsRequired()
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Sliders>(entity =>
+            {
+                entity.ToTable("SLIDERS");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseIdentityColumn();
+
+                entity.Property(e => e.CreatedBy)
+                    .HasColumnName("CreatedBy")
+                    .IsRequired();
+
+                entity.Property(e => e.Title)
+                    .HasColumnName("Title")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("Description")
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LinkTitle)
+                    .HasColumnName("LinkTitle")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Image)
+                    .HasColumnName("Image")
+                    .IsRequired()
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate)

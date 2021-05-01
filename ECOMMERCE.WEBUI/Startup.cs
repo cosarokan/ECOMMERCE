@@ -47,7 +47,8 @@ namespace ECOMMERCE.WEBUI
             services.AddTransient<IShoppingCartBusinessService, ShoppingCartBusinessService>();
             services.AddTransient<ISubCategoriesBusinessService, SubCategoriesBusinessService>();
             services.AddTransient<IUsersBusinessService, UsersBusinessService>();
-            
+            services.AddTransient<ISliderBusinessService, SliderBusinessService>();
+
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IBrandModelRepository, BrandModelRepository>();
             services.AddScoped<ICategoriesRepository, CategoriesRepository>();
@@ -68,6 +69,7 @@ namespace ECOMMERCE.WEBUI
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<ISubCategoriesRepository, SubCategoriesRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<ISliderRepository, SliderRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews();
         }

@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Okan Elektronik";
 }
-@model HomeViewModel
+@model ECOMMERCE.WEBUI.Models.ViewModels.HomeViewModel
 
 <section id="slider">
     <div class="container">
@@ -9,45 +9,27 @@
             <div class="col-sm-12">
                 <div id="slider-carousel" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#slider-carousel" data-slide-to="1"></li>
-                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        @for (int i = 0; i < Model.Sliders.Count; i++)
+                        {
+                        <li data-target="#slider-carousel" data-slide-to="@i" @(i==0? " class=\"active\" ":"")></li>
+                        }
                     </ol>
 
                     <div class="carousel-inner">
-                        <div class="item active">
-                            <div class="col-sm-6">
+                        @for (int i = 0; i < Model.Sliders.Count; i++)
+                        {
+                            <div class="item@(i==0?" active":"")">
+                                <div class="col-sm-6">
 
-                                <h2>Free E-Commerce Template</h2>
-                                <p>Çılgın Yaz indirimlerini görmek için devam edin.</p>
-                                <button type="button" class="btn btn-default get">Ürünlere Git</button>
+                                    <h2>@Model.Sliders[i].Title</h2>
+                                    <p>@Model.Sliders[i].Description</p>
+                                    <button type="button" class="btn btn-default get">@Model.Sliders[i].LinkTitle</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="@Model.Sliders[i].Image" class="girl img-responsive" alt="" />
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <img src="images/home/pc-banner.gif" class="girl img-responsive" alt="" />
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h2>100% Responsive Design</h2>
-                                <p>%60'a varan indirimler için devam edin.</p>
-                                <button type="button" class="btn btn-default get">Fırsatları Kaçırma</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="images/home/telefon-banner.gif" class="girl img-responsive" alt="" />
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h2>KARNE HEDİYESİ YAĞMURU</h2>
-                                <p>Karne Hediyesi bizden alınır. Dev indirimleri görmek için devam edin.</p>
-                                <button type="button" class="btn btn-default get">Ürünlere Git</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="images/home/telefon-slider.jpg" class="girl img-responsive" alt="" />
-                            </div>
-                        </div>
-
+                        }
                     </div>
 
                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
@@ -107,168 +89,27 @@
                 <div class="features_items">
                     <!--features_items-->
                     <h2 class="title text-center">ÜRÜNLER</h2>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>10000 TL</h2>
-                                    <p>iPhone</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
+                    @foreach (var product in Model.Products.Take(9))
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img class="img-fluid" src="@product.Image" alt="" />
+                                        <h2>@string.Format("{0} {1}", product.Price, product.Currency)</h2>
+                                        <p>@string.Format("{0} {1}", product.Brand, product.Model)</p>
+                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
+                                    </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
+                                        <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>3100 TL</h2>
-                                    <p>Huawei P20</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>3100 TL</h2>
-                                    <p>Huawei P20</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>3100 TL</h2>
-                                    <p>Huawei P20</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>3100 TL</h2>
-                                    <p>Huawei P20</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>3100 TL</h2>
-                                    <p>Huawei P20</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>3100 TL</h2>
-                                    <p>Huawei P20</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/mac.png" alt="" />
-                                    <h2>3100 TL</h2>
-                                    <p>Huawei P20</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img class="img-fluid" src="images/home/Oppo.png" alt="" />
-                                    <h2>2600 TL</h2>
-                                    <p>Oppo</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

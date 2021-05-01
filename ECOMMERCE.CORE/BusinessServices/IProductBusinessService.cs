@@ -37,5 +37,11 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="productId"></param>
         /// <returns></returns>
         Product GetById(int productId);
+
+        /// <summary>
+        /// Bütün ürünleri model bilgisiyle birlikte döndürür
+        /// </summary>
+        /// <returns></returns>
+        List<Product> GetAllWithBrand();
     }
 }

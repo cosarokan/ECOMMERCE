@@ -1,7 +1,5 @@
 ﻿using ECOMMERCE.CORE.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECOMMERCE.CORE.BusinessServices
 {
@@ -26,7 +24,7 @@ namespace ECOMMERCE.CORE.BusinessServices
         void Delete(int categoryId);
 
         /// <summary>
-        /// Tüm Marka kayıtlarını döndürür.
+        /// Tüm Kategori kayıtlarını döndürür.
         /// </summary>
         /// <returns></returns>
         List<Categories> GetAll();
@@ -37,5 +35,11 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="categoryId"></param>
         /// <returns></returns>
         Categories GetById(int categoryId);
+
+        /// <summary>
+        /// Tüm Kategori kayıtları alt kategorilerle döndürür.
+        /// </summary>
+        /// <returns></returns>
+        List<Categories> GetAllWithSubCategories();
     }
 }

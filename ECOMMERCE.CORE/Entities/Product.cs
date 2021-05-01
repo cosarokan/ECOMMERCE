@@ -20,6 +20,7 @@ namespace ECOMMERCE.CORE.Entities
         public string Currency { get; set; }
         public DateTime CreatedDate { get; set; }
         public int StockQuantity { get; set; }
+        public string Image { get; set; }
 
         public virtual Users CreatedBy { get; set; }
         public virtual BrandModels BrandModel { get; set; }

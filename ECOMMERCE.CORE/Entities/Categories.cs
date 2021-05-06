@@ -10,6 +10,7 @@ namespace ECOMMERCE.CORE.Entities
         public string Description { get; set; }
         public string Image { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string Code { get; set; }
 
         public virtual Users CreatedBy { get; set; }
         public virtual List<SubCategories> SubCategories { get; set; }

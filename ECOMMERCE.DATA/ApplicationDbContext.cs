@@ -127,6 +127,13 @@ namespace ECOMMERCE.DATA
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Code)
+                    .HasColumnName("Code")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+
                 entity.Property(e => e.CreatedDate)
                     .HasColumnName("CreatedDate")
                     .IsRequired()
@@ -156,6 +163,12 @@ namespace ECOMMERCE.DATA
 
                 entity.Property(e => e.Name)
                     .HasColumnName("Name")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Code)
+                    .HasColumnName("Code")
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -190,6 +203,12 @@ namespace ECOMMERCE.DATA
 
                 entity.Property(e => e.Name)
                     .HasColumnName("Name")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Code)
+                    .HasColumnName("Code")
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);

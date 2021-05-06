@@ -1,0 +1,203 @@
+﻿@model ECOMMERCE.WEBUI.Models.ViewModels.HomeViewModel
+<style>
+            body {
+                font-family: Arial;
+            }
+            .tab {
+                overflow: hidden;
+                border: 1px solid #ccc;
+                background-color: #f1f1f1;
+            }
+            .tab button {
+                background-color: inherit;
+                float: left;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 14px 16px;
+                transition: 0.3s;
+                font-size: 17px;
+            }
+            .tab button:hover {
+                background-color: #ddd;
+            }
+            .tab button.active {
+                background-color: #ccc;
+            }
+
+            .tabcontent {
+                display: none;
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+                border-top: none;
+            }
+</style>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <br><br><br>
+                <div class="left-sidebar">
+                    <h2>KATEGORİ</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        <a href="bilgisayar.html">BİLGİSAYAR</a>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="sportswear" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li><a href="#">Notebook</a></li>
+                                        <li><a href="#">Desktop</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        <a href="telefon.html">TELEFON</a>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="mens" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li><a href="#">IOS</a></li>
+                                        <li><a href="#">Android</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#womens">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        <a href="oyunKonsolu.html">Oyun Konsolları</a>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="womens" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li><a href="#">Play Station</a></li>
+                                        <li><a href="#">XBOX</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#cevreBirimleri">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            <a href="bilesenler.html">BİLGİSAYAR BİLEŞENLERİ</a>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="cevreBirimleri" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li><a href="#">RAM </a></li>
+                                            <li><a href="#">EKRAN KARTI </a></li>
+                                            <li><a href="#">İŞLEMCİ</a></li>
+                                            <li><a href="#">HARD DİSK</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+            <div class="col-sm-9 padding-right">
+                <div class="product-details">
+                    <div class="col-sm-5">
+                        <div class="view-product">
+                            <img class="img-fluid" src="images/product-details/iphone-11.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information">
+                            <h2>iPhone 11</h2>
+                            <div>
+                                <span>
+                                    <span>7500 TL</span>
+                                    <a href="#"><button class="button" id="sepeteEkleButton" style="float: right;">Sepete Ekle</button></a> <br>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab">
+                    <button class="tablinks" onclick="openCity(event, 'Ozellikler')">Özellikler</button>
+                    <button class="tablinks" onclick="openCity(event, 'Yorumlar')">Yorumlar</button>
+                </div>
+
+                <div id="Ozellikler" class="tabcontent active">
+                    <div>
+                        <div class="row">
+                            <div class="col-12" style="padding: 50px">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Yorumlar" class="tabcontent">
+                    <div class="tab-pane fade active in" id="reviews">
+                        <ul>
+                            <br>
+                            <li><a href=""><i class="fa fa-user"></i>OKAN</a></li>
+                            <li><a href=""><i class="fa fa-clock-o"></i>21:00</a></li>
+                            <li><a href=""><i class="fa fa-calendar-o"></i>15 Ocak 2021</a></li>
+                        </ul>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                        <div class="status alert alert-success" style="display: none"></div>
+                        <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+                            <div class="form-group col-md-6">
+                                <input type="text" name="name" class="form-control" required="required" placeholder="İsim">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="email" name="email" class="form-control" required="required" placeholder="Email">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <textarea name="message" id="message" class="form-control" rows="8" placeholder="Mesajınız"></textarea>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Paylaş">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

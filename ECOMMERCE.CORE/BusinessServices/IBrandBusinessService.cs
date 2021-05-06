@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ECOMMERCE.CORE.BusinessServices
 {
     /// <summary>
-    /// Marka business logic katmanı
+    /// Marka Business Logic Katmanı
     /// </summary>
     public interface IBrandBusinessService
     {

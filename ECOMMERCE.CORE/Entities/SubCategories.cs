@@ -11,6 +11,7 @@ namespace ECOMMERCE.CORE.Entities
         public string Description { get; set; }
         public string Thumbnail { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string Code { get; set; }
 
         public virtual Categories Category { get; set; }
         public virtual Users CreatedBy { get; set; }

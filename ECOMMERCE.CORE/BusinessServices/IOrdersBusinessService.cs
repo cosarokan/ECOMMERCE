@@ -16,7 +16,7 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <summary>
         /// Sipariş güncelleme işlemini yapar.
         /// </summary>
-        /// <param name="brand"></param>
+        /// <param name="orders"></param>
         void Update(Orders orders);
 
         /// <summary>

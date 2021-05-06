@@ -1,0 +1,110 @@
+﻿@model ECOMMERCE.WEBUI.Models.ViewModels.ProductViewModel
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Kategori</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+                        @foreach (var category in Model.Categories)
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#@category.Id">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            <a href="@category.Id">@category.Name</a>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="@category.Id" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach (var subCategory in category.SubCategories)
+                                            {
+                                                <li><a href="#">@subCategory.Name</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="brands_products">
+                        <h2>Markalar</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                                @{
+                                    foreach (BrandQuantityModel item in Model.Brands)
+                                    {
+                                        <li><a href="#"> <span class="pull-right">(@item.BrandQuantity)</span>@item.BrandName</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="price-range">
+                        <h2>Fiyat Aralığı</h2>
+                        <div class="well">
+                            <input type="text" class="span2" value="" data-slider-min="500" data-slider-max="20000" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
+                            <b>500 TL</b> <b class="pull-right">20000 TL</b>
+                        </div>
+                    </div>
+                    <div class="brands_products">
+                        <h2>FİLTRELE</h2>
+                        <div class="row">
+                            <div id="wrapper">
+                                <div class="scrollbar" id="style-default">
+                                    <div class="force-overflow">
+                                        <form>
+                                            <div class="form-check">
+                                                <h5>Özellik</h5>
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Filtrelenecek Özellik
+                                                </label>
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">ÜRÜNLER</h2>
+                    @foreach (var product in Model.Products.Take(9))
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img class="img-fluid" src="@product.Image" alt="" />
+                                        <h2>@string.Format("{0} {1}", product.Price, product.Currency)</h2>
+                                        <p>@string.Format("{0} {1}", product.Brand, product.Model)</p>
+                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
+                                    </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
+                                        <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

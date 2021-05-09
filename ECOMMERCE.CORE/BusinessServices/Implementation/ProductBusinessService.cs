@@ -1,6 +1,5 @@
 ﻿using ECOMMERCE.CORE.Entities;
 using ECOMMERCE.CORE.Repositories;
-using System;
 using System.Collections.Generic;
 
 namespace ECOMMERCE.CORE.BusinessServices.Implementation
@@ -31,9 +30,29 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _productRepository.GetAllWithBrand();
         }
 
+        public List<Product> GetAllWithBrandByCategoryCode(string categoryCode)
+        {
+            return _productRepository.GetAllWithBrandByCategoryCode(categoryCode);
+        }
+
+        public List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType)
+        {
+            return _productRepository.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productType);
+        }
+
+        public List<Product> GetAllWithBrandBySubCategoryCode(string categoryCode, string subCategoryCode)
+        {
+            return _productRepository.GetAllWithBrandBySubCategoryCode(categoryCode, subCategoryCode);
+        }
+
         public Product GetById(int productId)
         {
             return _productRepository.FindById(productId);
+        }
+
+        public Product GetByIdWithDetails(int productId)
+        {
+            return _productRepository.GetByIdWithDetails(productId);
         }
 
         public void Save(Product product)

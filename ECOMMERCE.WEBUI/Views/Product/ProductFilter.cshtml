@@ -2,7 +2,7 @@
     ViewData["Title"] = "Ürünler";
 }
 
-@model ECOMMERCE.WEBUI.Models.ViewModels.ProductViewModel
+@model ECOMMERCE.WEBUI.Models.ViewModels.ProductFilterViewModel
 
 <section>
     <div class="container">
@@ -59,12 +59,31 @@
                             <b>500 TL</b> <b class="pull-right">20000 TL</b>
                         </div>
                     </div>
+                    <div class="brands_products">
+                        <h2>FİLTRELE</h2>
+                        <div class="row">
+                            <div id="wrapper">
+                                <div class="scrollbar" id="style-default">
+                                    <div class="force-overflow">
+                                        <form>
+                                            <div class="form-check">
+                                                <h5>Özellik</h5>
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Filtrelenecek Özellik
+                                                </label>
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-sm-9 padding-right">
                 <div class="features_items">
-                    <!--features_items-->
                     <h2 class="title text-center">ÜRÜNLER</h2>
                     @foreach (var product in Model.Products.Take(9))
                     {
@@ -72,7 +91,7 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img class="img-fluid" src="@product.Image" alt="" />
+                                        <img class="img-fluid" src="@Url.Content(product.Image)" alt="Image" />
                                         <h2>@string.Format("{0} {1}", product.Price, product.Currency)</h2>
                                         <p>@string.Format("{0} {1}", product.Brand, product.Model)</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>

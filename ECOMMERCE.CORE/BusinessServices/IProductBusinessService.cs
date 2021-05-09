@@ -41,5 +41,30 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// </summary>
         /// <returns></returns>
         List<Product> GetAllWithBrand();
+
+        /// <summary>
+        /// Kategori koduna göre bütün ürünleri model bilgisiyle birlikte döndürür
+        /// </summary>
+        /// <returns></returns>
+        List<Product> GetAllWithBrandByCategoryCode(string categoryCode);
+
+        /// <summary>
+        /// Kategori ve alt kategori koduna göre bütün ürünleri model bilgisiyle birlikte döndürür
+        /// </summary>
+        /// <returns></returns>
+        List<Product> GetAllWithBrandBySubCategoryCode(string categoryCode, string subCategoryCode);
+
+        /// <summary>
+        /// Kategori, alt kategori ve ürün tipi koduna göre bütün ürünleri model bilgisiyle birlikte döndürür
+        /// </summary>
+        /// <returns></returns>
+        List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType);
+
+        /// <summary>
+        /// Id'ye göre Ürünün bağlı olduğu kategori, alt kategori ve ürün tipi bilgileriyle beraber kaydını döndürür.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        Product GetByIdWithDetails(int productId);
     }
 }

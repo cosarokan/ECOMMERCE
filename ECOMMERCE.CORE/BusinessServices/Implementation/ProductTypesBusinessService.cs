@@ -2,7 +2,6 @@
 using ECOMMERCE.CORE.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECOMMERCE.CORE.BusinessServices.Implementation
 {
@@ -26,6 +25,11 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
         public List<ProductTypes> GetAll()
         {
             return _productTypesRepository.All();
+        }
+
+        public List<ProductTypes> GetAllBySubCategory(string subCategoryCode)
+        {
+            return _productTypesRepository.GetAllBySubCategory(subCategoryCode);
         }
 
         public ProductTypes GetById(int productTypesId)

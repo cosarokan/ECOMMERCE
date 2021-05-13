@@ -15,17 +15,22 @@ namespace ECOMMERCE.DATA.Repositories
 
         public List<Product> GetAllWithBrand()
         {
-            return _dbDataContext.Products.Include(x => x.BrandModel).Include(x => x.BrandModel.Brand).ToList();
+            return _dbDataContext.Products
+                .Include(x => x.BrandModel)
+                .Include(x => x.BrandModel.Brand)
+                .Include(x => x.BrandModel.ProductType).ToList();
         }
 
         public List<Product> GetAllWithBrandByCategoryCode(string categoryCode)
         {
             List<Product> products = _dbDataContext.Products
                 .Include(x => x.BrandModel)
+                .Include(x => x.BrandModel.ProductPropertyValues)
                 .Include(x => x.BrandModel.Brand)
-                .Include(x=>x.BrandModel.ProductType)
-                .Include(x=>x.BrandModel.ProductType.SubCategory)
-                .Include(x=>x.BrandModel.ProductType.SubCategory.Category)
+                .Include(x => x.BrandModel.ProductType)
+                .Include(x => x.BrandModel.ProductType.SubCategory)
+                .Include(x => x.BrandModel.ProductType.SubCategory.Category)
+                .Include(x => x.BrandModel.ProductType.ProductProperties)
                 .Where(x => x.BrandModel.ProductType.SubCategory.Category.Code == categoryCode).ToList();
 
             return products;
@@ -35,10 +40,12 @@ namespace ECOMMERCE.DATA.Repositories
         {
             List<Product> products = _dbDataContext.Products
                 .Include(x => x.BrandModel)
+                .Include(x => x.BrandModel.ProductPropertyValues)
                 .Include(x => x.BrandModel.Brand)
                 .Include(x => x.BrandModel.ProductType)
                 .Include(x => x.BrandModel.ProductType.SubCategory)
                 .Include(x => x.BrandModel.ProductType.SubCategory.Category)
+                .Include(x => x.BrandModel.ProductType.ProductProperties)
                 .Where(x => x.BrandModel.ProductType.SubCategory.Category.Code == categoryCode
                 && x.BrandModel.ProductType.SubCategory.Code == subCategoryCode
                 && x.BrandModel.ProductType.Code == productType).ToList();
@@ -50,10 +57,12 @@ namespace ECOMMERCE.DATA.Repositories
         {
             List<Product> products = _dbDataContext.Products
                 .Include(x => x.BrandModel)
+                .Include(x => x.BrandModel.ProductPropertyValues)
                 .Include(x => x.BrandModel.Brand)
                 .Include(x => x.BrandModel.ProductType)
                 .Include(x => x.BrandModel.ProductType.SubCategory)
                 .Include(x => x.BrandModel.ProductType.SubCategory.Category)
+                .Include(x => x.BrandModel.ProductType.ProductProperties)
                 .Where(x => x.BrandModel.ProductType.SubCategory.Category.Code == categoryCode && x.BrandModel.ProductType.SubCategory.Code == subCategoryCode).ToList();
 
             return products;
@@ -61,13 +70,16 @@ namespace ECOMMERCE.DATA.Repositories
 
         public Product GetByIdWithDetails(int productId)
         {
-           return _dbDataContext.Products
-                .Include(x => x.BrandModel)
-                .Include(x => x.BrandModel.Brand)
-                .Include(x => x.BrandModel.ProductType)
-                .Include(x => x.BrandModel.ProductType.SubCategory)
-                .Include(x => x.BrandModel.ProductType.SubCategory.Category)
-                .FirstOrDefault(x => x.Id == productId);
+            return _dbDataContext.Products
+                 .Include(x => x.BrandModel)
+                 .Include(x => x.BrandModel.ProductPropertyValues)
+                 .Include(x => x.BrandModel.Brand)
+                 .Include(x => x.BrandModel.ProductType)
+                 .Include(x => x.BrandModel.ProductType.SubCategory)
+                 .Include(x => x.BrandModel.ProductType.SubCategory.Category)
+                 .Include(x => x.BrandModel.ProductType.ProductProperties)
+                 .Include(x => x.Comments).ThenInclude(y => y.Customer)
+                 .FirstOrDefault(x => x.Id == productId);
         }
     }
 }

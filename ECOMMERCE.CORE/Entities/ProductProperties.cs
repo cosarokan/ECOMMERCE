@@ -14,5 +14,6 @@ namespace ECOMMERCE.CORE.Entities
         public virtual ProductTypes ProductType { get; set; }
         public virtual Users CreatedBy { get; set; }
         public virtual List<ProductPropertyValues> ProductPropertyValues { get; set; }
+
     }
 }

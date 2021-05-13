@@ -37,5 +37,12 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="productPropertiesId"></param>
         /// <returns></returns>
         ProductProperties GetById(int productPropertiesId);
+
+        /// <summary>
+        /// Ütün tipine göre ürün özelliklerini döndürür.
+        /// </summary>
+        /// <param name="productTypeCode"></param>
+        /// <returns></returns>
+        List<ProductProperties> GetAllByProductTypeCode(string productTypeCode);
     }
 }

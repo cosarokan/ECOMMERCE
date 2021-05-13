@@ -1,11 +1,10 @@
 ﻿using ECOMMERCE.CORE.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECOMMERCE.CORE.Repositories
 {
     public interface IProductPropertyValuesRepository : IRepository<ProductPropertyValues, int>
     {
+        List<ProductPropertyValues> GetAllByProductTypeCode(string productTypeCode);
     }
 }

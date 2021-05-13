@@ -6,5 +6,6 @@ namespace ECOMMERCE.WEBUI.Models.ViewModels
     {
         public List<CategoryModel> Categories { get; set; }
         public ProductModel Product { get; set; }
+        public List<ProductTypeModel> ProductTypes { get; set; }
     }
 }

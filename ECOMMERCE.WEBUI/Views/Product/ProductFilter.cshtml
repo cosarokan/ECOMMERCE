@@ -19,7 +19,7 @@
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordian" href="#@category.Id">
                                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            <a href="@category.Id">@category.Name</a>
+                                            <a href="@Context.Request.Scheme://@Context.Request.Host/Products/@category.Code">@category.Name</a>
                                         </a>
                                     </h4>
                                 </div>
@@ -28,7 +28,7 @@
                                         <ul>
                                             @foreach (var subCategory in category.SubCategories)
                                             {
-                                                <li><a href="#">@subCategory.Name</a></li>
+                                                <li><a href="@Context.Request.Scheme://@Context.Request.Host/Products/@subCategory.CategoryCode/@subCategory.Code">@subCategory.Name</a></li>
                                             }
                                         </ul>
                                     </div>
@@ -59,26 +59,50 @@
                             <b>500 TL</b> <b class="pull-right">20000 TL</b>
                         </div>
                     </div>
-                    <div class="brands_products">
-                        <h2>FİLTRELE</h2>
-                        <div class="row">
-                            <div id="wrapper">
-                                <div class="scrollbar" id="style-default">
-                                    <div class="force-overflow">
-                                        <form>
-                                            <div class="form-check">
-                                                <h5>Özellik</h5>
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Filtrelenecek Özellik
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    @{
+                        if (Model.ProductTypes != null && Model.ProductTypes.Any())
+                        {
+                            <div class="brands_products">
+                                <h2>FİLTRELE</h2>
+                                <div class="row">
+                                    <div id="wrapper">
+                                        <div class="scrollbar" id="style-default">
+                                            <div class="force-overflow">
+                                                <form>
+                                                     <div class="form-check">
+                                                         <h5>Ürün Tipi</h5>
+                                                         <table style="width: 100%;">
+                                                             @foreach (var item in Model.ProductTypes)
+                                                             {
+                                                                 <tr>
+                                                                     <td><a style="cursor: pointer;" href="@Context.Request.Scheme://@Context.Request.Host/Products/@item.CategoryCode/@item.SubCategoryCode/@item.Code"><label class="form-check-label" for="flexCheckDefault">@item.Name</label></a></td>
+                                                                 </tr>
+                                                             }
+                                                         </table>
+                                                         @if (Model.ProductTypeProperties != null && Model.ProductTypeProperties.Any())
+                                                         {
+                                                           @foreach (var item in Model.ProductTypeProperties)
+                                                         {
+                                                            <h5>@item.Property</h5>
+                                                            <table style="width: 100%;">
+                                                             @foreach (var value in item.Values)
+                                                             {
+                                                                 <tr>
+                                                                     <td><label class="form-check-label" for="flexCheckDefault">@value</label></td>
+                                                                 </tr>
+                                                             }
+                                                             </table>
+                                                         }
+                                                         }
+                                                     </div>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        }
+                    }
                 </div>
             </div>
 
@@ -91,7 +115,7 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img class="img-fluid" src="@Url.Content(product.Image)" alt="Image" />
+                                        <a href="@Context.Request.Scheme://@Context.Request.Host/Products/@product.CategoryCode/@product.SubCategoryCode/@product.ProductTypeCode/@product.Id"><img class="img-fluid" src="@Context.Request.Scheme://@Context.Request.Host/@product.Image" alt="" /></a>
                                         <h2>@string.Format("{0} {1}", product.Price, product.Currency)</h2>
                                         <p>@string.Format("{0} {1}", product.Brand, product.Model)</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>

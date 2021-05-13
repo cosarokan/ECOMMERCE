@@ -1,7 +1,5 @@
 ﻿using ECOMMERCE.CORE.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECOMMERCE.CORE.BusinessServices
 {
@@ -37,5 +35,12 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="productPropertyValuesId"></param>
         /// <returns></returns>
         ProductPropertyValues GetById(int productPropertyValuesId);
+
+        /// <summary>
+        /// Ütün tipine göre ürün özelliklerini döndürür.
+        /// </summary>
+        /// <param name="productTypeCode"></param>
+        /// <returns></returns>
+        List<ProductPropertyValues> GetAllByProductTypeCode(string productTypeCode);
     }
 }

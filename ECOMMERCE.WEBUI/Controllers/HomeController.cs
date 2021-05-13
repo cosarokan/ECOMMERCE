@@ -34,11 +34,14 @@ namespace ECOMMERCE.WEBUI.Controllers
                 Id = x.Id,
                 Description = x.Description,
                 Image = x.Image,
+                Code = x.Code,
                 Name = x.Name,
-                SubCategories = x.SubCategories.Select(y => new SubCategoryViewModel
+                SubCategories = x.SubCategories.Select(y => new SubCategoryModel
                 {
                     Description = y.Description,
-                    Name = y.Name
+                    Name = y.Name,
+                    Code = y.Code,
+                    CategoryCode = y.Category.Code
                 }).ToList()
             }).ToList();
 
@@ -49,6 +52,9 @@ namespace ECOMMERCE.WEBUI.Controllers
                 Model = x.BrandModel.Name,
                 Brand = x.BrandModel.Brand.Name,
                 ProductCode = x.ProductCode,
+                CategoryCode = x.BrandModel.ProductType.SubCategory.Category.Code,
+                SubCategoryCode = x.BrandModel.ProductType.SubCategory.Code,
+                ProductTypeCode = x.BrandModel.ProductType.Code,
                 Price = x.Price,
                 Currency = x.Currency
             }).ToList();

@@ -27,6 +27,11 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _productPropertiesRepository.All();
         }
 
+        public List<ProductProperties> GetAllByProductTypeCode(string productTypeCode)
+        {
+            return _productPropertiesRepository.GetAllByProductTypeCode(productTypeCode);
+        }
+
         public ProductProperties GetById(int productPropertiesId)
         {
             return _productPropertiesRepository.FindById(productPropertiesId);

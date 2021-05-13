@@ -3,7 +3,7 @@ using ECOMMERCE.CORE.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ECOMMERCE.DATA.Repositories
 {
@@ -13,6 +13,13 @@ namespace ECOMMERCE.DATA.Repositories
         {
 
         }
-    }
 
+        public List<ProductTypes> GetAllBySubCategory(string subCategoryCode)
+        {
+            return _dbDataContext.ProductTypes
+                .Include(x => x.SubCategory)
+                .Include(x => x.SubCategory.Category)
+                .Where(x => x.SubCategory.Code == subCategoryCode).ToList();
+        }
+    }
 }

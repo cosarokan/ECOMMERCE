@@ -1,154 +1,155 @@
 ﻿@model ECOMMERCE.WEBUI.Models.ViewModels.DetailViewModel
-<style>
-    body {
-        font-family: Arial;
-    }
 
-    .tab {
-        overflow: hidden;
-        border: 1px solid #ccc;
-        background-color: #f1f1f1;
-    }
-
-        .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-        }
-
-            .tab button:hover {
-                background-color: #ddd;
-            }
-
-            .tab button.active {
-                background-color: #ccc;
-            }
-
-    .tabcontent {
-        display: none;
-        padding: 6px 12px;
-        border: 1px solid #ccc;
-        border-top: none;
-    }
-</style>
-
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <br><br><br>
-                <div class="left-sidebar">
-                    <h2>KATEGORİ</h2>
-                    <div class="panel-group category-products" id="accordian">
-                        @foreach (var category in Model.Categories)
-                        {
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordian" href="#@category.Id">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            <a href="@category.Id">@category.Name</a>
-                                        </a>
-                                    </h4>
+    <script src="~/js/jquery.js"></script>
+    <link href="~/styles/Detail.css" rel="stylesheet" />
+    <script src="~/scripts/Detail.js"></script>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <br><br><br>
+                    <div class="left-sidebar">
+                        <h2>KATEGORİ</h2>
+                        <div class="panel-group category-products" id="accordian">
+                            @foreach (var category in Model.Categories)
+                            {
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordian" href="#@category.Id">
+                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                                <a href="@Context.Request.Scheme://@Context.Request.Host/Products/@category.Code">@category.Name</a>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="@category.Id" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <ul>
+                                                @foreach (var subCategory in category.SubCategories)
+                                                {
+                                                    <li><a href="@Context.Request.Scheme://@Context.Request.Host/Products/@subCategory.CategoryCode/@subCategory.Code">@subCategory.Name</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="@category.Id" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            @foreach (var subCategory in category.SubCategories)
-                                            {
-                                                <li><a href="#">@subCategory.Name</a></li>
-                                            }
-                                        </ul>
+                            }
+
+                        </div>
+
+                    @{
+                        if (Model.ProductTypes != null && Model.ProductTypes.Any())
+                        {
+                            <div class="brands_products">
+                                <h2>FİLTRELE</h2>
+                                <div class="row">
+                                    <div id="wrapper">
+                                        <div class="scrollbar" id="style-default">
+                                            <div class="force-overflow">
+                                                <form>
+                                                     <div class="form-check">
+                                                         <h5>Ürün Tipi</h5>
+                                                          <table style="width: 100%;">
+                                                             @foreach (var item in Model.ProductTypes)
+                                                             {
+                                                                 <tr>
+                                                                     <td><a style="cursor: pointer;" href="@Context.Request.Scheme://@Context.Request.Host/Products/@item.CategoryCode/@item.SubCategoryCode/@item.Code"><label class="form-check-label" for="flexCheckDefault">@item.Name</label></a></td>
+                                                                 </tr>
+                                                             }
+                                                         </table>
+                                                     </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         }
-
+                    }
                     </div>
                 </div>
-            </div>
-            <br><br><br><br>
-            <div class="col-sm-9 padding-right">
-                <div class="product-details">
-                    <div class="col-sm-5">
-                        <div class="view-product">
-                            <img class="img-fluid" src="@Model.Product.Image" alt="" />
-                        </div>
-                    </div>
-                    <div class="col-sm-7">
-                        <div class="product-information">
-                            <h2>@Model.Product.Brand - @Model.Product.Model</h2>
-                            <h2>@Model.Product.Price @Model.Product.Currency</h2>
-                            <div>
-                                <span>
-                                    <span></span>
-                                    <a href="#"><button class="button" id="sepeteEkleButton" style="float: right;">Sepete Ekle</button></a> <br>
-                                </span>
+                <br><br><br><br>
+                <div class="col-sm-9 padding-right">
+                    <div class="product-details">
+                        <div class="col-sm-5">
+                            <div class="view-product">
+                                <img class="img-fluid" src="@Context.Request.Scheme://@Context.Request.Host/@Model.Product.Image" alt="" />
                             </div>
                         </div>
-                    </div>
-
-                </div>
-                <div class="tab">
-                    <button>Özellikler</button>
-                </div>
-                <div id="Ozellikler">
-                    <div>
-                        <div class="row">
-                            <div class="col-12" style="padding: 50px">
-                                <table class="table table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div class="col-sm-7">
+                            <div class="product-information">
+                                <h2>@Model.Product.Brand - @Model.Product.Model</h2>
+                                <h2>@Model.Product.Price @Model.Product.Currency</h2>
+                                <div>
+                                    <span>
+                                        <span></span>
+                                        <a href="#"><button class="button" id="sepeteEkleButton" style="float: right;">Sepete Ekle</button></a> <br>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div id="Yorumlar" class="tabcontent">
-                    <div class="tab-pane fade active in" id="reviews">
-                        <ul>
-                            <br>
-                            <li><a href=""><i class="fa fa-user"></i>OKAN</a></li>
-                            <li><a href=""><i class="fa fa-clock-o"></i>21:00</a></li>
-                            <li><a href=""><i class="fa fa-calendar-o"></i>15 Ocak 2021</a></li>
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                        <div class="status alert alert-success" style="display: none"></div>
-                        <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
-                            <div class="form-group col-md-6">
-                                <input type="text" name="name" class="form-control" required="required" placeholder="İsim">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="email" name="email" class="form-control" required="required" placeholder="Email">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <textarea name="message" id="message" class="form-control" rows="8" placeholder="Mesajınız"></textarea>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Paylaş">
-                            </div>
-                        </form>
+                    </div>
+                    <div class="tab">
+                        <button class="tablinks active" onclick="changeTab(event, 'Ozellikler')">Özellikler</button>
+                        <button class="tablinks" onclick="changeTab(event, 'Yorumlar')">Yorumlar</button>
+                    </div>
+                    <div id="Ozellikler" class="tabcontent" style="display: block;">
+                        <div>
+                            @{
+                                <div class="row">
+                                    <div class="col-12" style="padding: 50px">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Marka</td>
+                                                    <td>@Model.Product.Brand</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Model</td>
+                                                    <td>@Model.Product.Model</td>
+                                                </tr>
+                                                @foreach (var item in Model.Product.ProductProperties)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Property</td>
+                                                        <td><b>@item.Value</b></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div id="Yorumlar" class="tabcontent">
+                        @{
+                            foreach (var item in Model.Product.Comments)
+                            {
+                                <div class="tab-pane fade active in" id="reviews">
+                                    <ul>
+                                        <br>
+                                        <li><a href=""><i class="fa fa-user"></i>@item.CommentedBy</a></li>
+                                        <li><a href=""><i class="fa fa-clock-o"></i>@item.CommentedDate.ToString("HH:mm")</a></li>
+                                        <li><a href=""><i class="fa fa-calendar-o"></i>@item.CommentedDate.ToString("dd MMMM yyyy")</a></li>
+                                    </ul>
+                                    <p>@item.Comment</p>
+                                    <div class="status alert alert-success" style="display: none"></div>
+                                    <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+                                        <div class="form-group col-md-12">
+                                            <textarea name="message" id="message" class="form-control" rows="8" placeholder="Mesajınız"></textarea>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <input type="submit" name="submit" class="btn btn-primary pull-right" value="Paylaş">
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>

@@ -35,5 +35,12 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="productTypesId"></param>
         /// <returns></returns>
         ProductTypes GetById(int productTypesId);
+
+        /// <summary>
+        /// Alt kategoriye göre ürün tiplerini döndürür.
+        /// </summary>
+        /// <param name="subCategoryCode"></param>
+        /// <returns></returns>
+        List<ProductTypes> GetAllBySubCategory(string subCategoryCode);
     }
 }

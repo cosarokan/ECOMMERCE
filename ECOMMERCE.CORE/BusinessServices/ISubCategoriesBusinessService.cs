@@ -37,5 +37,11 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="subCategoriesId"></param>
         /// <returns></returns>
         SubCategories GetById(int subCategoriesId);
+
+        /// <summary>
+        /// Alt kategorileri bağlı olduğu kategori bilgileriyle döndürür
+        /// </summary>
+        /// <returns></returns>
+        List<SubCategories> GetAllWithCategories();
     }
 }

@@ -6,6 +6,8 @@ using ECOMMERCE.CORE.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using ECOMMERCE.WEBUI.Models.ViewModels;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace ECOMMERCE.WEBUI.Controllers
 {
@@ -14,9 +16,11 @@ namespace ECOMMERCE.WEBUI.Controllers
         private readonly ICategoriesBusinessService _categoriesBusinessService;
         private readonly IProductBusinessService _productBusinessService;
         private readonly ISliderBusinessService _sliderBusinessService;
+        private readonly IConfiguration _iConfig;
 
-        public HomeController(ICategoriesBusinessService categoriesBusinessService, IProductBusinessService productBusinessService, ISliderBusinessService sliderBusinessService)
+        public HomeController(IConfiguration iConfig, ICategoriesBusinessService categoriesBusinessService, IProductBusinessService productBusinessService, ISliderBusinessService sliderBusinessService)
         {
+            _iConfig = iConfig;
             _categoriesBusinessService = categoriesBusinessService;
             _productBusinessService = productBusinessService;
             _sliderBusinessService = sliderBusinessService;
@@ -45,19 +49,19 @@ namespace ECOMMERCE.WEBUI.Controllers
                 }).ToList()
             }).ToList();
 
-            homeViewModel.Products = products.Select(x => new ProductModel
-            {
-                Id = x.Id,
-                Image = x.Image,
-                Model = x.BrandModel.Name,
-                Brand = x.BrandModel.Brand.Name,
-                ProductCode = x.ProductCode,
-                CategoryCode = x.BrandModel.ProductType.SubCategory.Category.Code,
-                SubCategoryCode = x.BrandModel.ProductType.SubCategory.Code,
-                ProductTypeCode = x.BrandModel.ProductType.Code,
-                Price = x.Price,
-                Currency = x.Currency
-            }).ToList();
+            //homeViewModel.Products = products.Select(x => new ProductModel
+            //{
+            //    Id = x.Id,
+            //    Image = x.Image,
+            //    Model = x.BrandModel.Name,
+            //    Brand = x.BrandModel.Brand.Name,
+            //    ProductCode = x.ProductCode,
+            //    CategoryCode = x.BrandModel.ProductType.SubCategory.Category.Code,
+            //    SubCategoryCode = x.BrandModel.ProductType.SubCategory.Code,
+            //    ProductTypeCode = x.BrandModel.ProductType.Code,
+            //    Price = x.Price,
+            //    Currency = x.Currency
+            //}).ToList();
 
             homeViewModel.Sliders = sliders.Select(x => new SliderModel
             {
@@ -70,6 +74,11 @@ namespace ECOMMERCE.WEBUI.Controllers
             return View(homeViewModel);
         }
 
+        public ActionResult Favourite()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
 
@@ -80,6 +89,40 @@ namespace ECOMMERCE.WEBUI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public ActionResult GetProducts(int pageNumber)
+        {
+            string itemsParPage = _iConfig.GetSection("ItemsPerPage").Value;
+
+            List<Product> products = _productBusinessService.GetAllWithBrand(pageNumber, int.Parse(itemsParPage));
+
+            List<ProductModel> productViewModelList = products.Select(x => new ProductModel
+            {
+                Id = x.Id,
+                Image = x.Image,
+                Model = x.BrandModel.Name,
+                Brand = x.BrandModel.Brand.Name,
+                ProductCode = x.ProductCode,
+                CategoryCode = x.BrandModel.ProductType.SubCategory.Category.Code,
+                SubCategoryCode = x.BrandModel.ProductType.SubCategory.Code,
+                ProductTypeCode = x.BrandModel.ProductType.Code,
+                Price = x.Price,
+                Currency = x.Currency,
+                ImageSrc = string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, x.Image),
+                Url = string.Format("Products/{0}/{1}/{2}/{3}", x.BrandModel.ProductType.SubCategory.Category.Code, x.BrandModel.ProductType.SubCategory.Code,
+                  x.BrandModel.ProductType.Code,
+                  x.Id)
+            }).ToList();
+            return Json(new { Data = productViewModelList });
+        }
+
+        [HttpPost]
+        public ActionResult GetProductsCount()
+        {
+            int productCount = _productBusinessService.Count();
+            return Json(new { Data = productCount });
         }
     }
 }

@@ -15,14 +15,14 @@ namespace ECOMMERCE.WEBUI.Controllers
         private readonly IProductBusinessService _productBusinessService;
         private readonly ICategoriesBusinessService _categoriesBusinessService;
         private readonly IProductTypesBusinessService _productTypesBusinessService;
-        private readonly IProductPropertyValuesBusinessService _productPropertyValuesBusinessService;
+        private readonly IProductPropertiesBusinessService _productPropertiesBusinessService;
 
-        public ProductController(IProductBusinessService productBusinessService, ICategoriesBusinessService categoriesBusinessService, IProductTypesBusinessService productTypesBusinessService, IProductPropertyValuesBusinessService productPropertyValuesBusinessService)
+        public ProductController(IProductBusinessService productBusinessService, ICategoriesBusinessService categoriesBusinessService, IProductTypesBusinessService productTypesBusinessService, IProductPropertiesBusinessService productPropertiesBusinessService)
         {
             _productBusinessService = productBusinessService;
             _categoriesBusinessService = categoriesBusinessService;
             _productTypesBusinessService = productTypesBusinessService;
-            _productPropertyValuesBusinessService = productPropertyValuesBusinessService;
+            _productPropertiesBusinessService = productPropertiesBusinessService;
         }
 
         [Route("Products")]
@@ -208,7 +208,7 @@ namespace ECOMMERCE.WEBUI.Controllers
             List<Product> products = _productBusinessService.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productTypeCode);
             List<Categories> categories = _categoriesBusinessService.GetAllWithSubCategories();
             List<ProductTypes> productTypes = _productTypesBusinessService.GetAllBySubCategory(subCategoryCode);
-            List<ProductPropertyValues> productPropertyValues = _productPropertyValuesBusinessService.GetAllByProductTypeCode(productTypeCode);
+            List<ProductProperties> productProperties = _productPropertiesBusinessService.GetAllByProductTypeCode(productTypeCode);
 
             List<ProductModel> productModelList = new List<ProductModel>();
             foreach (Product item in products)
@@ -262,15 +262,12 @@ namespace ECOMMERCE.WEBUI.Controllers
                 SubCategoryCode = x.SubCategory.Code
             }).ToList();
 
-            //productViewModel.ProductTypeProperties = (from pv in productPropertyValues
-            //                                          group pv by pv.ProductProperty into pp
-            //                                          select new ProductPropertyFilterModel
-            //                                          {
-            //                                              Id = pp.Key.Id,
-            //                                              Property = pp.Key.Property,
-            //                                              Values = pp.Select(x => x.Value).ToList()
-            //                                          }
-            //    ).ToList();
+            productViewModel.ProductTypeProperties = productProperties.Select(x => new ProductPropertyFilterModel
+            {
+                Id = x.Id,
+                Property = x.Property,
+                Values = x.ProductPropertyValues.Select(y => y.Value).Distinct().ToList()
+            }).ToList();
 
             return View(productViewModel);
         }
@@ -310,7 +307,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                 Id = product.Id,
                 CategoryCode = product.BrandModel.ProductType.SubCategory.Category.Code,
                 SubCategoryCode = product.BrandModel.ProductType.SubCategory.Code,
-                ProductTypeCode = product.BrandModel.ProductType.Code
+                ProductTypeCode = product.BrandModel.ProductType.Code,
             };
 
             detailViewModel.Product.ProductProperties = new List<ProductPropertyModel>();
@@ -341,4 +338,3 @@ namespace ECOMMERCE.WEBUI.Controllers
         }
     }
 }
-

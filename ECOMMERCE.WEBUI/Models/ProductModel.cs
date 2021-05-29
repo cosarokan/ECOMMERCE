@@ -14,6 +14,8 @@ namespace ECOMMERCE.WEBUI.Models
         public string Image { get; set; }
         public decimal Price { get; set; }
         public string Currency { get; set; }
+        public string ImageSrc { get; set; }
+        public string Url { get; set; }
         public List<ProductPropertyModel> ProductProperties { get; set; }
         public List<ProductCommentModel> Comments { get; set; }
     }

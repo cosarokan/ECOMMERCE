@@ -27,6 +27,11 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _subCategoriesRepository.All();
         }
 
+        public List<SubCategories> GetAllWithCategories()
+        {
+            return _subCategoriesRepository.GetAllWithCategories();
+        }
+
         public SubCategories GetById(int subCategoriesId)
         {
             return _subCategoriesRepository.FindById(subCategoriesId);

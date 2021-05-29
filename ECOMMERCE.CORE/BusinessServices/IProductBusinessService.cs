@@ -1,5 +1,6 @@
 ﻿using ECOMMERCE.CORE.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ECOMMERCE.CORE.BusinessServices
 {
@@ -66,5 +67,19 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="productId"></param>
         /// <returns></returns>
         Product GetByIdWithDetails(int productId);
+
+        /// <summary>
+        /// Bütün ürünleri sayfalama kriterlerine göre döndürür.
+        /// </summary>
+        /// <param name="pageNumber">Sayfa Numarası</param>
+        /// <param name="itemsPerPage">Sayfa Başı Kayıt Sayısı</param>
+        /// <returns></returns>
+        List<Product> GetAllWithBrand(int pageNumber, int itemsPerPage);
+
+        /// <summary>
+        /// Ürünlerin toplam sayısını döndürür.
+        /// </summary>
+        /// <returns></returns>
+        int Count();
     }
 }

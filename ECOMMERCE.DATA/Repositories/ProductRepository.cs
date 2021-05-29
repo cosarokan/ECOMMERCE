@@ -3,6 +3,7 @@ using ECOMMERCE.CORE.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ECOMMERCE.DATA.Repositories
 {
@@ -11,6 +12,23 @@ namespace ECOMMERCE.DATA.Repositories
         public ProductRepository(DbContext dbDataContext) : base(dbDataContext)
         {
 
+        }
+
+        public int Count()
+        {
+            return _dbDataContext.Products.Count();
+        }
+
+        public List<Product> GetAllWithBrand(int pageNumber, int itemsPerPage)
+        {
+            var skip = (pageNumber - 1) * itemsPerPage;
+            return _dbDataContext.Products
+                .Skip(skip)
+                .Take(itemsPerPage)
+                .Include(x => x.BrandModel)
+                .Include(x => x.BrandModel.Brand)
+                .Include(x => x.BrandModel.ProductType)
+                .ToList();
         }
 
         public List<Product> GetAllWithBrand()

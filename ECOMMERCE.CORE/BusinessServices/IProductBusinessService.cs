@@ -62,6 +62,12 @@ namespace ECOMMERCE.CORE.BusinessServices
         List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType);
 
         /// <summary>
+        /// Kategori, alt kategori ve ürün tipi koduna göre bütün ürünleri model bilgisiyle birlikte döndürür
+        /// </summary>
+        /// <returns></returns>
+        List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage);
+
+        /// <summary>
         /// Id'ye göre Ürünün bağlı olduğu kategori, alt kategori ve ürün tipi bilgileriyle beraber kaydını döndürür.
         /// </summary>
         /// <param name="productId"></param>
@@ -81,5 +87,11 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// </summary>
         /// <returns></returns>
         int Count();
+
+        /// <summary>
+        /// Ürünlerin toplam sayısını döndürür.
+        /// </summary>
+        /// <returns></returns>
+        int Count(string categoryCode, string subCategoryCode, string productTypeCode);
     }
 }

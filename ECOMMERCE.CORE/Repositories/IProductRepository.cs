@@ -14,6 +14,8 @@ namespace ECOMMERCE.CORE.Repositories
 
         List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType);
 
+        List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage);
+
         Product GetByIdWithDetails(int productId);
 
         /// <summary>
@@ -29,5 +31,11 @@ namespace ECOMMERCE.CORE.Repositories
         /// </summary>
         /// <returns></returns>
         int Count();
+
+        /// <summary>
+        /// Ürünlerin toplam sayısını döndürür.
+        /// </summary>
+        /// <returns></returns>
+        int Count(string categoryCode, string subCategoryCode, string productTypeCode);
     }
 }

@@ -3,6 +3,7 @@ using ECOMMERCE.CORE.Entities;
 using ECOMMERCE.WEBUI.Models;
 using ECOMMERCE.WEBUI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,9 +17,11 @@ namespace ECOMMERCE.WEBUI.Controllers
         private readonly ICategoriesBusinessService _categoriesBusinessService;
         private readonly IProductTypesBusinessService _productTypesBusinessService;
         private readonly IProductPropertiesBusinessService _productPropertiesBusinessService;
+        private readonly IConfiguration _iConfig;
 
-        public ProductController(IProductBusinessService productBusinessService, ICategoriesBusinessService categoriesBusinessService, IProductTypesBusinessService productTypesBusinessService, IProductPropertiesBusinessService productPropertiesBusinessService)
+        public ProductController(IConfiguration iConfig, IProductBusinessService productBusinessService, ICategoriesBusinessService categoriesBusinessService, IProductTypesBusinessService productTypesBusinessService, IProductPropertiesBusinessService productPropertiesBusinessService)
         {
+            _iConfig = iConfig;
             _productBusinessService = productBusinessService;
             _categoriesBusinessService = categoriesBusinessService;
             _productTypesBusinessService = productTypesBusinessService;
@@ -32,25 +35,6 @@ namespace ECOMMERCE.WEBUI.Controllers
 
             List<Product> products = _productBusinessService.GetAllWithBrand();
             List<Categories> categories = _categoriesBusinessService.GetAllWithSubCategories();
-
-            List<ProductModel> productModelList = new List<ProductModel>();
-            foreach (Product item in products)
-            {
-                ProductModel productModel = new ProductModel();
-                productModel.Brand = item.BrandModel.Brand.Name;
-                productModel.Currency = item.Currency;
-                productModel.Image = item.Image;
-                productModel.Model = item.BrandModel.Name;
-                productModel.Price = item.Price;
-                productModel.ProductCode = item.ProductCode;
-                productModel.Id = item.Id;
-                productModel.CategoryCode = item.BrandModel.ProductType.SubCategory.Category.Code;
-                productModel.SubCategoryCode = item.BrandModel.ProductType.SubCategory.Code;
-                productModel.ProductTypeCode = item.BrandModel.ProductType.Code;
-
-                productModelList.Add(productModel);
-            }
-            productViewModel.Products = productModelList;
 
             //linq lambda
             productViewModel.Categories = categories.Select(x => new CategoryModel
@@ -88,26 +72,6 @@ namespace ECOMMERCE.WEBUI.Controllers
             List<Product> products = _productBusinessService.GetAllWithBrandByCategoryCode(categoryCode);
             List<Categories> categories = _categoriesBusinessService.GetAllWithSubCategories();
 
-
-            List<ProductModel> productModelList = new List<ProductModel>();
-            foreach (Product item in products)
-            {
-                ProductModel productModel = new ProductModel();
-                productModel.Brand = item.BrandModel.Brand.Name;
-                productModel.Currency = item.Currency;
-                productModel.Image = item.Image;
-                productModel.Model = item.BrandModel.Name;
-                productModel.Price = item.Price;
-                productModel.ProductCode = item.ProductCode;
-                productModel.Id = item.Id;
-                productModel.CategoryCode = item.BrandModel.ProductType.SubCategory.Category.Code;
-                productModel.SubCategoryCode = item.BrandModel.ProductType.SubCategory.Code;
-                productModel.ProductTypeCode = item.BrandModel.ProductType.Code;
-
-                productModelList.Add(productModel);
-            }
-            productViewModel.Products = productModelList;
-
             //linq lambda
             productViewModel.Categories = categories.Select(x => new CategoryModel
             {
@@ -144,25 +108,6 @@ namespace ECOMMERCE.WEBUI.Controllers
             List<Product> products = _productBusinessService.GetAllWithBrandBySubCategoryCode(categoryCode, subCategoryCode);
             List<Categories> categories = _categoriesBusinessService.GetAllWithSubCategories();
             List<ProductTypes> productTypes = _productTypesBusinessService.GetAllBySubCategory(subCategoryCode);
-
-            List<ProductModel> productModelList = new List<ProductModel>();
-            foreach (Product item in products)
-            {
-                ProductModel productModel = new ProductModel();
-                productModel.Brand = item.BrandModel.Brand.Name;
-                productModel.Currency = item.Currency;
-                productModel.Image = item.Image;
-                productModel.Model = item.BrandModel.Name;
-                productModel.Price = item.Price;
-                productModel.ProductCode = item.ProductCode;
-                productModel.Id = item.Id;
-                productModel.CategoryCode = item.BrandModel.ProductType.SubCategory.Category.Code;
-                productModel.SubCategoryCode = item.BrandModel.ProductType.SubCategory.Code;
-                productModel.ProductTypeCode = item.BrandModel.ProductType.Code;
-
-                productModelList.Add(productModel);
-            }
-            productViewModel.Products = productModelList;
 
             //linq lambda
             productViewModel.Categories = categories.Select(x => new CategoryModel
@@ -209,25 +154,6 @@ namespace ECOMMERCE.WEBUI.Controllers
             List<Categories> categories = _categoriesBusinessService.GetAllWithSubCategories();
             List<ProductTypes> productTypes = _productTypesBusinessService.GetAllBySubCategory(subCategoryCode);
             List<ProductProperties> productProperties = _productPropertiesBusinessService.GetAllByProductTypeCode(productTypeCode);
-
-            List<ProductModel> productModelList = new List<ProductModel>();
-            foreach (Product item in products)
-            {
-                ProductModel productModel = new ProductModel();
-                productModel.Brand = item.BrandModel.Brand.Name;
-                productModel.Currency = item.Currency;
-                productModel.Image = item.Image;
-                productModel.Model = item.BrandModel.Name;
-                productModel.Price = item.Price;
-                productModel.ProductCode = item.ProductCode;
-                productModel.Id = item.Id;
-                productModel.CategoryCode = item.BrandModel.ProductType.SubCategory.Category.Code;
-                productModel.SubCategoryCode = item.BrandModel.ProductType.SubCategory.Code;
-                productModel.ProductTypeCode = item.BrandModel.ProductType.Code;
-
-                productModelList.Add(productModel);
-            }
-            productViewModel.Products = productModelList;
 
             //linq lambda
             productViewModel.Categories = categories.Select(x => new CategoryModel
@@ -335,6 +261,40 @@ namespace ECOMMERCE.WEBUI.Controllers
             }).ToList();
 
             return View(detailViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult GetProducts(string categoryCode, string subCategoryCode, string productTypeCode, int pageNumber)
+        {
+            string itemsParPage = _iConfig.GetSection("ItemsPerPage").Value;
+
+            List<Product> products = _productBusinessService.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productTypeCode, pageNumber, int.Parse(itemsParPage));
+
+            List<ProductModel> productViewModelList = products.Select(x => new ProductModel
+            {
+                Id = x.Id,
+                Image = x.Image,
+                Model = x.BrandModel.Name,
+                Brand = x.BrandModel.Brand.Name,
+                ProductCode = x.ProductCode,
+                CategoryCode = x.BrandModel.ProductType.SubCategory.Category.Code,
+                SubCategoryCode = x.BrandModel.ProductType.SubCategory.Code,
+                ProductTypeCode = x.BrandModel.ProductType.Code,
+                Price = x.Price,
+                Currency = x.Currency,
+                ImageSrc = string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, x.Image),
+                Url = string.Format("{0}://{1}/Products/{2}/{3}/{4}/{5}", Request.Scheme, Request.Host, x.BrandModel.ProductType.SubCategory.Category.Code, x.BrandModel.ProductType.SubCategory.Code,
+                  x.BrandModel.ProductType.Code,
+                  x.Id)
+            }).ToList();
+            return Json(new { Data = productViewModelList });
+        }
+
+        [HttpPost]
+        public ActionResult GetProductsCount(string categoryCode, string subCategoryCode, string productTypeCode)
+        {
+            int productCount = _productBusinessService.Count(categoryCode, subCategoryCode, productTypeCode);
+            return Json(new { Data = productCount });
         }
     }
 }

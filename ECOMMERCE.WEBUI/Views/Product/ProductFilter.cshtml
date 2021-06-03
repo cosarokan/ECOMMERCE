@@ -69,33 +69,33 @@
                                         <div class="scrollbar" id="style-default">
                                             <div class="force-overflow">
                                                 <form>
-                                                     <div class="form-check">
-                                                         <h5>Ürün Tipi</h5>
-                                                         <table style="width: 100%;">
-                                                             @foreach (var item in Model.ProductTypes)
-                                                             {
-                                                                 <tr>
-                                                                     <td><a style="cursor: pointer;" href="@Context.Request.Scheme://@Context.Request.Host/Products/@item.CategoryCode/@item.SubCategoryCode/@item.Code"><label class="form-check-label" for="flexCheckDefault">@item.Name</label></a></td>
-                                                                 </tr>
-                                                             }
-                                                         </table>
-                                                         @if (Model.ProductTypeProperties != null && Model.ProductTypeProperties.Any())
-                                                         {
-                                                           @foreach (var item in Model.ProductTypeProperties)
-                                                         {
-                                                            <h5>@item.Property</h5>
-                                                            <table style="width: 100%;">
-                                                             @foreach (var value in item.Values)
-                                                             {
-                                                                 <tr>
-                                                                     <td><label class="form-check-label" for="flexCheckDefault">@value</label></td>
-                                                                     <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
-                                                                 </tr>
-                                                             }
-                                                             </table>
-                                                         }
-                                                         }
-                                                     </div>
+                                                    <div class="form-check">
+                                                        <h5>Ürün Tipi</h5>
+                                                        <table style="width: 100%;">
+                                                            @foreach (var item in Model.ProductTypes)
+                                                            {
+                                                                <tr>
+                                                                    <td><a style="cursor: pointer;" href="@Context.Request.Scheme://@Context.Request.Host/Products/@item.CategoryCode/@item.SubCategoryCode/@item.Code"><label class="form-check-label" for="flexCheckDefault">@item.Name</label></a></td>
+                                                                </tr>
+                                                            }
+                                                        </table>
+                                                        @if (Model.ProductTypeProperties != null && Model.ProductTypeProperties.Any())
+                                                        {
+                                                            @foreach (var item in Model.ProductTypeProperties)
+                                                            {
+                                                                <h5>@item.Property</h5>
+                                                                <table style="width: 100%;">
+                                                                    @foreach (var value in item.Values)
+                                                                    {
+                                                                        <tr>
+                                                                            <td><label class="form-check-label" for="flexCheckDefault">@value</label></td>
+                                                                            <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+                                                                        </tr>
+                                                                    }
+                                                                </table>
+                                                            }
+                                                        }
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -110,29 +110,21 @@
             <div class="col-sm-9 padding-right">
                 <div class="features_items">
                     <h2 class="title text-center">ÜRÜNLER</h2>
-                    @foreach (var product in Model.Products.Take(9))
-                    {
-                        <div class="col-sm-4">
-                            <div class="product-image-wrapper">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <a href="@Context.Request.Scheme://@Context.Request.Host/Products/@product.CategoryCode/@product.SubCategoryCode/@product.ProductTypeCode/@product.Id"><img class="img-fluid" src="@Context.Request.Scheme://@Context.Request.Host/@product.Image" alt="" /></a>
-                                        <h2>@string.Format("{0} {1}", product.Price, product.Currency)</h2>
-                                        <p>@string.Format("{0} {1}", product.Brand, product.Model)</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>
-                                    </div>
-                                </div>
-                                <div class="choose">
-                                    <ul class="nav nav-pills nav-justified">
-                                        <li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>
-                                        <li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                    <div id="products_area">
+
+                    </div>
+                    <div class="row">
+                        <div id="pagination" style="text-align:center;"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<script src="~/js/jquery.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
+<script type="text/javascript" src="~/scripts/Shared.js"></script>
+<script type="text/javascript" src="~/scripts/Product.js"></script>

@@ -22,6 +22,11 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _productRepository.Count();
         }
 
+        public int Count(string categoryCode, string subCategoryCode, string productTypeCode)
+        {
+            return _productRepository.Count(categoryCode, subCategoryCode, productTypeCode);
+        }
+
         public void Delete(int productId)
         {
             Product product = GetById(productId);
@@ -59,6 +64,11 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
         public List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType)
         {
             return _productRepository.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productType);
+        }
+
+        public List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage)
+        {
+            return _productRepository.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productType, pageNumber, itemsPerPage);
         }
 
         public List<Product> GetAllWithBrandBySubCategoryCode(string categoryCode, string subCategoryCode)

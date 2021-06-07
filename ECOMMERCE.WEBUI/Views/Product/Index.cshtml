@@ -45,11 +45,13 @@
                                 @{
                                     foreach (BrandQuantityModel item in Model.Brands)
                                     {
-                                        <li><a href="#"> <span class="pull-right">(@item.BrandQuantity)</span>@item.BrandName</a></li>
+                                        <li><a id="@item.BrandId" class="btnBrandFilter" style="cursor: pointer;"> <span class="pull-right">(@item.BrandQuantity)</span>@item.BrandName</a></li>
                                     }
                                 }
                             </ul>
                         </div>
+                        <br />
+                        <div style="width: 100%; text-align: right;"><button type="button" class="btn btn-link btn-filter">Filtrele</button></div>
                     </div>
 
                     <div class="price-range">
@@ -57,6 +59,8 @@
                         <div class="well">
                             <input type="text" class="span2" value="" data-slider-min="500" data-slider-max="20000" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
                             <b>500 TL</b> <b class="pull-right">20000 TL</b>
+                            <br />
+                            <div style="width: 100%; text-align: right;"><button type="button" class="btn btn-link btn-filter">Filtrele</button></div>
                         </div>
                     </div>
                 </div>
@@ -69,10 +73,10 @@
                     <div id="products_area">
 
                     </div>
-                    <div class="row">
-                        <div id="pagination" style="text-align:center;"></div>
-                    </div>
                 </div>
+            </div>
+            <div class="row">
+                <div id="pagination" style="text-align:center;"></div>
             </div>
         </div>
     </div>

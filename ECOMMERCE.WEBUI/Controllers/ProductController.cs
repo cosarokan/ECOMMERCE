@@ -57,6 +57,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                                        group p by p.BrandModel.Brand into b
                                        select new BrandQuantityModel
                                        {
+                                           BrandId = b.Key.Id,
                                            BrandName = b.Key.Name,
                                            BrandQuantity = b.Count()
                                        }).OrderBy(x => x.BrandName).ToList();
@@ -93,6 +94,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                                        group p by p.BrandModel.Brand into b
                                        select new BrandQuantityModel
                                        {
+                                           BrandId = b.Key.Id,
                                            BrandName = b.Key.Name,
                                            BrandQuantity = b.Count()
                                        }).OrderBy(x => x.BrandName).ToList();
@@ -130,6 +132,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                                        group p by p.BrandModel.Brand into b
                                        select new BrandQuantityModel
                                        {
+                                           BrandId = b.Key.Id,
                                            BrandName = b.Key.Name,
                                            BrandQuantity = b.Count()
                                        }).OrderBy(x => x.BrandName).ToList();
@@ -176,6 +179,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                                        group p by p.BrandModel.Brand into b
                                        select new BrandQuantityModel
                                        {
+                                           BrandId = b.Key.Id,
                                            BrandName = b.Key.Name,
                                            BrandQuantity = b.Count()
                                        }).OrderBy(x => x.BrandName).ToList();
@@ -264,7 +268,7 @@ namespace ECOMMERCE.WEBUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetProducts(string categoryCode, string subCategoryCode, string productTypeCode, int pageNumber)
+        public ActionResult GetProducts(FilterModel filterModel, string categoryCode, string subCategoryCode, string productTypeCode, int pageNumber)
         {
             string itemsParPage = _iConfig.GetSection("ItemsPerPage").Value;
 
@@ -291,7 +295,7 @@ namespace ECOMMERCE.WEBUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetProductsCount(string categoryCode, string subCategoryCode, string productTypeCode)
+        public ActionResult GetProductsCount(FilterModel filterModel, string categoryCode, string subCategoryCode, string productTypeCode)
         {
             int productCount = _productBusinessService.Count(categoryCode, subCategoryCode, productTypeCode);
             return Json(new { Data = productCount });

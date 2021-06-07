@@ -7,12 +7,34 @@ $(document).ready(function () {
     getProductCount();
     getProducts(1);
     registerEvents();
+
 });
 
 function registerEvents() {
-    $('.btnBrandFilter').on('click', function () {
+    $('.btn-filter').on('click', function () {
+        var checkBrandCheckBoxesIds = $.map($('.brand-checkbox:checked'), function (c) {
+            return parseInt(c.id);
+        });
+
+        var priceFilter = $('.tooltip-inner').text();
+        var minValue = parseInt(priceFilter.split(':')[0].trim());
+        var maxValue = parseInt(priceFilter.split(':')[1].trim());
+        debugger;
+        var productPropertyValues = new Array();
+        $.each($('.product-property-values:checked'), function (i, n) {
+            var productPropertyValue =
+            {
+                Key: parseInt(n.id),
+                Value: n.value
+            };
+            productPropertyValues.push(productPropertyValue);
+        });
+
         var filterModel = {
-            BrandIdList: parseInt($(this).attr('id'))
+            BrandIdList: checkBrandCheckBoxesIds,
+            PriceMinValue: minValue,
+            PriceMaxValue: maxValue,
+            ProductProperties: productPropertyValues
         };
 
         getProductCount(filterModel);
@@ -36,6 +58,7 @@ function registerUrlParameters() {
 
 function getProductCount(filterModel) {
     var param = {
+        filterModel: filterModel,
         categoryCode: categoryCode,
         subCategoryCode: subCategoryCode,
         productTypeCode: productTypeCode
@@ -65,6 +88,7 @@ function getProductCount(filterModel) {
 
 function getProducts(pageNumber, filterModel) {
     var param = {
+        filterModel: filterModel,
         categoryCode: categoryCode,
         subCategoryCode: subCategoryCode,
         productTypeCode: productTypeCode,

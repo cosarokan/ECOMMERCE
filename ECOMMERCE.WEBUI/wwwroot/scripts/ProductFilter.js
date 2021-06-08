@@ -7,7 +7,7 @@ $(document).ready(function () {
     getProductCount();
     getProducts(1);
     registerEvents();
-
+    $('.tooltip-inner').text('');
 });
 
 function registerEvents() {
@@ -17,8 +17,13 @@ function registerEvents() {
         });
 
         var priceFilter = $('.tooltip-inner').text();
-        var minValue = parseInt(priceFilter.split(':')[0].trim());
-        var maxValue = parseInt(priceFilter.split(':')[1].trim());
+        var minValue = null;
+        var maxValue = null;
+        if ($('.tooltip-inner').text() != '' && $('.tooltip-inner').text().split(':').length > 1) {
+            minValue = parseInt(priceFilter.split(':')[0].trim());
+            maxValue = parseInt(priceFilter.split(':')[1].trim());
+        }
+
         debugger;
         var productPropertyValues = new Array();
         $.each($('.product-property-values:checked'), function (i, n) {

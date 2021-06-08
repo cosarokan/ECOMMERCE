@@ -7,18 +7,27 @@ $(document).ready(function () {
     getProductCount();
     getProducts(1);
     registerEvents();
+    $('.tooltip-inner').text('');
 });
 
-function registerEvents() {
-    $('.btnBrandFilter').on('click', function () {
-        var filterModel = {
-            BrandIdList: parseInt($(this).attr('id'))
-        };
-
-        getProductCount(filterModel);
-        getProducts(1, filterModel);
+$('.btn-filter').on('click', function () {
+    var checkBrandCheckBoxesIds = $.map($('.brand-checkbox:checked'), function (c) {
+        return parseInt(c.id);
     });
-}
+
+    var priceFilter = $('.tooltip-inner').text();
+    var minValue = parseInt(priceFilter.split(':')[0].trim());
+    var maxValue = parseInt(priceFilter.split(':')[1].trim());
+
+    var filterModel = {
+        BrandIdList: checkBrandCheckBoxesIds,
+        PriceMinValue: minValue,
+        PriceMaxValue: maxValue
+    };
+
+    getProductCount(filterModel);
+    getProducts(1, filterModel);
+});
 
 function registerUrlParameters() {
     var path = window.location.pathname;

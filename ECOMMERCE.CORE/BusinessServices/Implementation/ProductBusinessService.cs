@@ -1,4 +1,5 @@
 ﻿using ECOMMERCE.CORE.Entities;
+using ECOMMERCE.CORE.Models;
 using ECOMMERCE.CORE.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,9 +23,9 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _productRepository.Count();
         }
 
-        public int Count(string categoryCode, string subCategoryCode, string productTypeCode)
+        public int Count(FilterModel filterModel, string categoryCode, string subCategoryCode, string productTypeCode)
         {
-            return _productRepository.Count(categoryCode, subCategoryCode, productTypeCode);
+            return _productRepository.Count(filterModel, categoryCode, subCategoryCode, productTypeCode);
         }
 
         public void Delete(int productId)
@@ -66,9 +67,9 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _productRepository.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productType);
         }
 
-        public List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage)
+        public List<Product> GetAllWithBrandByProductType(FilterModel filterModel, string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage)
         {
-            return _productRepository.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productType, pageNumber, itemsPerPage);
+            return _productRepository.GetAllWithBrandByProductType(filterModel, categoryCode, subCategoryCode, productType, pageNumber, itemsPerPage);
         }
 
         public List<Product> GetAllWithBrandBySubCategoryCode(string categoryCode, string subCategoryCode)

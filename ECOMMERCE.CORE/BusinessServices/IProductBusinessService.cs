@@ -1,4 +1,5 @@
 ﻿using ECOMMERCE.CORE.Entities;
+using ECOMMERCE.CORE.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -65,7 +66,7 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// Kategori, alt kategori ve ürün tipi koduna göre bütün ürünleri model bilgisiyle birlikte döndürür
         /// </summary>
         /// <returns></returns>
-        List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage);
+        List<Product> GetAllWithBrandByProductType(FilterModel filterModel, string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage);
 
         /// <summary>
         /// Id'ye göre Ürünün bağlı olduğu kategori, alt kategori ve ürün tipi bilgileriyle beraber kaydını döndürür.
@@ -92,6 +93,6 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// Ürünlerin toplam sayısını döndürür.
         /// </summary>
         /// <returns></returns>
-        int Count(string categoryCode, string subCategoryCode, string productTypeCode);
+        int Count(FilterModel filterModel, string categoryCode, string subCategoryCode, string productTypeCode);
     }
 }

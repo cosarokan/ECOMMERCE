@@ -1,4 +1,5 @@
 ﻿using ECOMMERCE.CORE.Entities;
+using ECOMMERCE.CORE.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace ECOMMERCE.CORE.Repositories
 
         List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType);
 
-        List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage);
+        List<Product> GetAllWithBrandByProductType(FilterModel filterModel, string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage);
 
         Product GetByIdWithDetails(int productId);
 
@@ -36,6 +37,6 @@ namespace ECOMMERCE.CORE.Repositories
         /// Ürünlerin toplam sayısını döndürür.
         /// </summary>
         /// <returns></returns>
-        int Count(string categoryCode, string subCategoryCode, string productTypeCode);
+        int Count(FilterModel filterModel, string categoryCode, string subCategoryCode, string productTypeCode);
     }
 }

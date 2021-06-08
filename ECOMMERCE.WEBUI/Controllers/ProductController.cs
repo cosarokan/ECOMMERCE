@@ -1,5 +1,6 @@
 ﻿using ECOMMERCE.CORE.BusinessServices;
 using ECOMMERCE.CORE.Entities;
+using ECOMMERCE.CORE.Models;
 using ECOMMERCE.WEBUI.Models;
 using ECOMMERCE.WEBUI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -272,7 +273,7 @@ namespace ECOMMERCE.WEBUI.Controllers
         {
             string itemsParPage = _iConfig.GetSection("ItemsPerPage").Value;
 
-            List<Product> products = _productBusinessService.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productTypeCode, pageNumber, int.Parse(itemsParPage));
+            List<Product> products = _productBusinessService.GetAllWithBrandByProductType(filterModel, categoryCode, subCategoryCode, productTypeCode, pageNumber, int.Parse(itemsParPage));
 
             List<ProductModel> productViewModelList = products.Select(x => new ProductModel
             {
@@ -297,8 +298,10 @@ namespace ECOMMERCE.WEBUI.Controllers
         [HttpPost]
         public ActionResult GetProductsCount(FilterModel filterModel, string categoryCode, string subCategoryCode, string productTypeCode)
         {
-            int productCount = _productBusinessService.Count(categoryCode, subCategoryCode, productTypeCode);
+            int productCount = _productBusinessService.Count(filterModel, categoryCode, subCategoryCode, productTypeCode);
             return Json(new { Data = productCount });
         }
+
+
     }
 }

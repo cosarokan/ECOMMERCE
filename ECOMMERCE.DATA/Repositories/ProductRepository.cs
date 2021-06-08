@@ -1,4 +1,5 @@
 ﻿using ECOMMERCE.CORE.Entities;
+using ECOMMERCE.CORE.Models;
 using ECOMMERCE.CORE.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace ECOMMERCE.DATA.Repositories
             return _dbDataContext.Products.Count();
         }
 
-        public int Count(string categoryCode, string subCategoryCode, string productTypeCode)
+        public int Count(FilterModel filterModel, string categoryCode, string subCategoryCode, string productTypeCode)
         {
             var products = _dbDataContext.Products
                 .Include(x => x.BrandModel)
@@ -41,6 +42,21 @@ namespace ECOMMERCE.DATA.Repositories
             if (!string.IsNullOrEmpty(productTypeCode))
             {
                 products = products.Where(x => x.BrandModel.ProductType.Code == productTypeCode).ToList();
+            }
+            if (filterModel != null)
+            {
+                if (filterModel.BrandIdList != null && filterModel.BrandIdList.Any())
+                {
+                    products = products.Where(x => filterModel.BrandIdList.Contains(x.BrandModel.Brand.Id)).ToList();
+                }
+                if (filterModel.PriceMinValue != null && filterModel.PriceMaxValue != null)
+                {
+                    products = products.Where(x => x.Price >= filterModel.PriceMinValue && x.Price <= filterModel.PriceMaxValue).ToList();
+                }
+                if (filterModel.ProductProperties != null && filterModel.ProductProperties.Any())
+                {
+
+                }
             }
 
             return products.Count();
@@ -98,7 +114,7 @@ namespace ECOMMERCE.DATA.Repositories
             return products;
 
         }
-        public List<Product> GetAllWithBrandByProductType(string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage)
+        public List<Product> GetAllWithBrandByProductType(FilterModel filterModel, string categoryCode, string subCategoryCode, string productType, int pageNumber, int itemsPerPage)
         {
             var products = _dbDataContext.Products
                 .Include(x => x.BrandModel)
@@ -111,7 +127,7 @@ namespace ECOMMERCE.DATA.Repositories
 
             if (!string.IsNullOrEmpty(categoryCode))
             {
-                products = products.Where(x => x.BrandModel.ProductType.SubCategory.Category.Code == categoryCode ).ToList();
+                products = products.Where(x => x.BrandModel.ProductType.SubCategory.Category.Code == categoryCode).ToList();
             }
             if (!string.IsNullOrEmpty(subCategoryCode))
             {
@@ -120,6 +136,24 @@ namespace ECOMMERCE.DATA.Repositories
             if (!string.IsNullOrEmpty(productType))
             {
                 products = products.Where(x => x.BrandModel.ProductType.Code == productType).ToList();
+            }
+            if (filterModel != null)
+            {
+                if (filterModel.BrandIdList != null && filterModel.BrandIdList.Any())
+                {
+                    products = products.Where(x => filterModel.BrandIdList.Contains(x.BrandModel.Brand.Id)).ToList();
+                }
+                if (filterModel.PriceMinValue != null && filterModel.PriceMaxValue != null)
+                {
+                    products = products.Where(x => x.Price >= filterModel.PriceMinValue && x.Price <= filterModel.PriceMaxValue).ToList();
+                }
+                if (filterModel.ProductProperties != null && filterModel.ProductProperties.Any())
+                {
+                    foreach (var product in products)
+                    {
+                        //BrandModel.ProductType.ProductProperties.Contains
+                    }
+                }
             }
 
             var skip = (pageNumber - 1) * itemsPerPage;

@@ -3,6 +3,7 @@ using ECOMMERCE.CORE.BusinessServices.Implementation;
 using ECOMMERCE.CORE.Repositories;
 using ECOMMERCE.DATA;
 using ECOMMERCE.DATA.Repositories;
+using ECOMMERCE.WEBUI.Notification;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -71,6 +72,7 @@ namespace ECOMMERCE.WEBUI
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<ISliderRepository, SliderRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<INotification, SendEmail>();
             services.AddControllersWithViews();
         }
 

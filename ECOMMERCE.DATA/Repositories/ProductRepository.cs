@@ -55,7 +55,12 @@ namespace ECOMMERCE.DATA.Repositories
                 }
                 if (filterModel.ProductProperties != null && filterModel.ProductProperties.Any())
                 {
-
+                    List<Product> productFilter = new List<Product>();
+                    foreach (var productProperty in filterModel.ProductProperties)
+                    {
+                        productFilter.AddRange(products.Where(x => x.BrandModel.ProductPropertyValues.Any(y => y.ProductPropertyId == productProperty.Key && y.Value == productProperty.Value)));
+                    }
+                    products = productFilter;
                 }
             }
 
@@ -149,10 +154,12 @@ namespace ECOMMERCE.DATA.Repositories
                 }
                 if (filterModel.ProductProperties != null && filterModel.ProductProperties.Any())
                 {
-                    foreach (var product in products)
+                    List<Product> productFilter = new List<Product>();
+                    foreach (var productProperty in filterModel.ProductProperties)
                     {
-                        //BrandModel.ProductType.ProductProperties.Contains
+                        productFilter.AddRange(products.Where(x => x.BrandModel.ProductPropertyValues.Any(y => y.ProductPropertyId == productProperty.Key && y.Value == productProperty.Value)));
                     }
+                    products = productFilter;
                 }
             }
 

@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="form">
+    <div class="container">
+        <div class="row" style="display: flex;justify-content:center;">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <h2>Hesabınızla Giriş Yapın</h2>
+                    <form action="#">
+                        <input type="email" placeholder="Email" required="" />
+                        <input type="password" placeholder="Parola" />
+                        <span>
+                            <input type="checkbox" class="checkbox">
+                            Beni Hatırla
+                        </span>
+                        <button type="button" class="btn btn-warning btn-lg">Giriş Yap</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <h2>Yeni Üye Kaydı</h2>
+                    <form action="#">
+                        <input type="text" placeholder="İsim" required="" id="txtName" />
+                        <input type="email" placeholder="Email Adresi" id="txtEmail" />
+                        <input type="password" placeholder="Parola" id="txtPassword" />
+                        <button type="button" class="btn btn-warning btn-lg" id="btnSignin">Kayıt Ol</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/jquery.js"></script>
+<script src="~/scripts/Login.js"></script>

@@ -322,24 +322,20 @@ namespace ECOMMERCE.DATA
 
                 entity.Property(e => e.Address)
                     .HasColumnName("Address")
-                    .IsRequired()
                     .IsUnicode(false);
 
                 entity.Property(e => e.GSM1)
                     .HasColumnName("GSM1")
-                    .IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.GSM2)
                     .HasColumnName("GSM2")
-                    .IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
                     .HasColumnName("Phone")
-                    .IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false);
 

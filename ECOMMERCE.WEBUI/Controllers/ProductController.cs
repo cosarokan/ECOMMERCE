@@ -378,7 +378,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                 CustomerId = userContext.Id,
                 IsApproved = true,
                 ProductId = productId,
-                Title = $"{userContext.Name} Kullanıcı Yorumu"
+                Title = $"{userContext.Id} Kullanıcı Yorumu"
             };
 
             _commentBusinessService.Save(comment);

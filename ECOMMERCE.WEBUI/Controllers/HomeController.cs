@@ -73,11 +73,6 @@ namespace ECOMMERCE.WEBUI.Controllers
             return View(homeViewModel);
         }
 
-        public ActionResult Favourite()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
 

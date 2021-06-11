@@ -27,6 +27,11 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _districtRepository.All();
         }
 
+        public List<District> GetAllByCityId(int cityId)
+        {
+            return _districtRepository.Where(x => x.CityId == cityId);
+        }
+
         public District GetById(int districtId)
         {
             return _districtRepository.FindById(districtId);

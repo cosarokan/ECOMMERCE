@@ -2,6 +2,7 @@
 using ECOMMERCE.CORE.Entities;
 using ECOMMERCE.WEBUI.Extensions;
 using ECOMMERCE.WEBUI.Models;
+using ECOMMERCE.WEBUI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,29 @@ namespace ECOMMERCE.WEBUI.Controllers
     public class PaymentController : Controller
     {
         private readonly IOrdersBusinessService _ordersBusinessService;
-        public PaymentController(IOrdersBusinessService ordersBusinessService)
+        private readonly ICityBusinessService _cityBusinessService;
+        private readonly IDistrictBusinessService _districtBusinessService;
+        public PaymentController(IOrdersBusinessService ordersBusinessService, ICityBusinessService cityBusinessService, IDistrictBusinessService districtBusinessService)
         {
             _ordersBusinessService = ordersBusinessService;
+            _cityBusinessService = cityBusinessService;
+            _districtBusinessService = districtBusinessService;
         }
         public IActionResult Index()
         {
-            return View();
+            List<City> cities = _cityBusinessService.GetAll();
+            List<CityModels> cityModels = new List<CityModels>();
+            foreach (var cityItem in cities)
+            {
+                CityModels cityModel = new CityModels();
+                cityModel.Id = cityItem.Id;
+                cityModel.Name = cityItem.Name;
+                cityModels.Add(cityModel);
+            }
+
+            PaymentViewModel paymentViewModel = new PaymentViewModel();
+            paymentViewModel.Cities = cityModels;
+            return View(paymentViewModel);
         }
 
         [HttpPost]
@@ -50,6 +67,20 @@ namespace ECOMMERCE.WEBUI.Controllers
                 HttpContext.Session.Set<List<ShoppingCartItemModel>>("ShoppingCart", null);
             }
             return Json(new { Data = true });
+        }
+
+        [HttpPost]
+        public IActionResult GetDistrictsByCityId(int cityId)
+        {
+            List<District> districts =  _districtBusinessService.GetAllByCityId(cityId);
+            List<DistrictModel> districtModels = districts.Select(x => new DistrictModel
+            {
+                CityId = x.CityId,
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+
+            return Json(new { Data = districts });
         }
 
         [Route("PaymentSuccessful")]

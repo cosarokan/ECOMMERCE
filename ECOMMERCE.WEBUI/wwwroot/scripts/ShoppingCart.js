@@ -9,11 +9,17 @@
 	});
 
 	$(".cart_quantity_up").click(function () {
-		var quantityValue = parseInt($('#' + $(this).attr('productId')).val());
-		if (quantityValue < 100) {
-			quantityValue++;
-			$('#' + $(this).attr('productId')).attr("value", quantityValue);
+        var quantityValue = parseInt($('#' + $(this).attr('productId')).val());
+
+        var stockQuantity = parseInt($(this).attr('productStockQuantity'));
+
+        quantityValue++;
+        if (quantityValue > stockQuantity) {
+            alert("Bu üründen stokta " + stockQuantity + " adet bulunmaktadır!");
+            return;
         }
+        $('#' + $(this).attr('productId')).attr("value", quantityValue);
+
         updateShoppingCart(parseInt($(this).attr('productId')), quantityValue);
     });
 

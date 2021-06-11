@@ -64,7 +64,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                         CustomerId = model.Id,
                         ProductId = x.Id,
                         Quantity = x.Quantity,
-                        AddDate = DateTime.Now
+                        AddDate = DateTime.Now,
                     }).ToList();
                 }
 
@@ -78,7 +78,8 @@ namespace ECOMMERCE.WEBUI.Controllers
                             Id = x.ProductId,
                             Name = $"{x.Product.BrandModel.Brand.Name} {x.Product.BrandModel.Name}",
                             Price = x.Product.Price,
-                            Quantity = x.Quantity
+                            Quantity = x.Quantity,
+                            StockQuantity = x.Product.StockQuantity,
                         }).ToList();
                         HttpContext.Session.Set<List<ShoppingCartItemModel>>("ShoppingCart", updatedShoppingCarts);
                     }

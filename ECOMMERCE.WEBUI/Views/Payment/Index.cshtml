@@ -3,6 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model ECOMMERCE.WEBUI.Models.ViewModels.PaymentViewModel
 
 <section id="cart_items">
     <div class="container">
@@ -30,29 +31,16 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <span>Şehir</span>
-                                    <select>
-                                        <option value="01">Ocak</option>
-                                        <option value="02">Şubat</option>
-                                        <option value="03">Mart</option>
-                                        <option value="04">Nisan</option>
-                                        <option value="05">Mayıs</option>
-                                        <option value="06">Haziran</option>
-                                        <option value="07">Temmuz</option>
-                                        <option value="08">Ağustos</option>
-                                        <option value="09">Eylül</option>
-                                        <option value="10">Ekim</option>
-                                        <option value="11">Kasım</option>
-                                        <option value="12">Aralık</option>
+                                    <select id="chkCities">
+                                        @foreach (var item in Model.Cities)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
                                     <span>İlçe</span>
-                                    <select>
-                                        <option value="22">2022</option>
-                                        <option value="23">2023</option>
-                                        <option value="24">2024</option>
-                                        <option value="25">2025</option>
-                                        <option value="26">2026</option>
+                                    <select id="chkDistricts">
                                     </select>
                                 </div>
                             </div>
@@ -80,26 +68,12 @@
                                     <div class="col-sm-6">
                                         <select>
                                             <option value="01">Ocak</option>
-                                            <option value="02">Şubat</option>
-                                            <option value="03">Mart</option>
-                                            <option value="04">Nisan</option>
-                                            <option value="05">Mayıs</option>
-                                            <option value="06">Haziran</option>
-                                            <option value="07">Temmuz</option>
-                                            <option value="08">Ağustos</option>
-                                            <option value="09">Eylül</option>
-                                            <option value="10">Ekim</option>
-                                            <option value="11">Kasım</option>
-                                            <option value="12">Aralık</option>
+
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
                                         <select>
                                             <option value="22">2022</option>
-                                            <option value="23">2023</option>
-                                            <option value="24">2024</option>
-                                            <option value="25">2025</option>
-                                            <option value="26">2026</option>
                                         </select>
                                     </div>
                                 </div>
@@ -112,12 +86,12 @@
         <div class="review-payment">
             <h2>İnceleme ve Ödeme</h2>
         </div>
-        <div class="row" style="text-align: center;">
-            <div class="col-sm-8 col-sm-offset-2 " style="display: flex;justify-content:center;  ">
-                <table class="table table-hover" style="width: 850px;">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <table class="table table-hover">
                     <thead>
-                    <th class="text-center">Ürün Adı</th>
-                    <th class="text-center">Ürün Fiyatı</th>
+                    <th class="text-center" style="width: 500px;">Ürün Adı</th>
+                    <th class="text-center" style="width: 300px;">Ürün Fiyatı</th>
                     </thead>
 
                     <tbody>
@@ -131,8 +105,8 @@
                                 foreach (ShoppingCartItemModel shoppingCartItem in shoppingCartItemModels)
                                 {
                                     <tr>
-                                        <td class="text-center" style="width: 120px">@shoppingCartItem.Name</td>
-                                        <td class="text-center" style="width: 120px">@shoppingCartItem.Price TL</td>
+                                        <td>@shoppingCartItem.Name</td>
+                                        <td class="text-center">@shoppingCartItem.Price TL</td>
                                     </tr>
                                 }
                             }
@@ -161,4 +135,5 @@
 </section>
 
 <script src="~/js/jquery.js"></script>
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
 <script src="~/scripts/Payment.js"></script>

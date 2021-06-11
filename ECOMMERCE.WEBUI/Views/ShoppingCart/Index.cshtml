@@ -5,13 +5,13 @@
 }
 
 <div class="row" style="width: 100%;">
-    <div class="col-sm-8 col-sm-offset-2 " style="width: 100%;">
+    <div class="col-sm-8 col-sm-offset-2">
         <table class="table table-hover ">
             <thead>
-            <th class="text-center">Ürün Adı</th>
-            <th class="text-center">Ürün Fiyatı</th>
-            <th class="text-center">Ürün Adeti</th>
-            <th class="text-center">Sepetten Çıkar</th>
+                <th class="text-center">Ürün Adı</th>
+                <th class="text-center">Ürün Fiyatı</th>
+                <th class="text-center">Ürün Adeti</th>
+                <th class="text-center">Sepetten Çıkar</th>
             </thead>
             <tbody>
                 @using Microsoft.AspNetCore.Http;
@@ -30,7 +30,7 @@
                                     <div class="cart_quantity_button" style="padding-left: 40px;">
                                         <a class="cart_quantity_down" productId="@shoppingCartItem.Id"> - </a>
                                         <input class="cart_quantity_input" id="@shoppingCartItem.Id" type="text" disabled="disabled" name="quantity" value="@shoppingCartItem.Quantity" autocomplete="off" size="2">
-                                        <a class="cart_quantity_up" productId="@shoppingCartItem.Id"> + </a>
+                                        <a class="cart_quantity_up" productId="@shoppingCartItem.Id" productStockQuantity="@shoppingCartItem.StockQuantity"> + </a>
                                     </div>
                                 </td>
                                 <td class="text-center" style="width: 120px">

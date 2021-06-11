@@ -37,5 +37,12 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="districtId"></param>
         /// <returns></returns>
         District GetById(int districtId);
+
+        /// <summary>
+        /// İle göre ilçe listesini döndürür.
+        /// </summary>
+        /// <param name="cityId">Şehir Id'si</param>
+        /// <returns></returns>
+        List<District> GetAllByCityId(int cityId);
     }
 }

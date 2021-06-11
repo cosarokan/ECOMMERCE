@@ -54,6 +54,11 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             foreach (OrderDetails item in orderDetails)
             {
                 _orderDetailsRepository.Add(item);
+
+                Product product = _productRepository.FindById(item.ProductId);
+                product.StockQuantity = product.StockQuantity - item.Count;
+
+                _productRepository.Update(product);
             }
 
             _unitOfWork.Complete();

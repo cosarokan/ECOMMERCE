@@ -317,7 +317,7 @@ namespace ECOMMERCE.WEBUI.Controllers
                 Id = product.Id,
                 Name = $"{product.BrandModel.Brand.Name} {product.BrandModel.Name}",
                 Price = product.Price,
-                Quantity = 1
+                Quantity = 1,
             };
 
             if (HttpContext.Session.Get<List<ShoppingCartItemModel>>("ShoppingCart") != null)

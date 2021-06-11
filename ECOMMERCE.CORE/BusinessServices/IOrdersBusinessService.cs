@@ -1,7 +1,6 @@
 ﻿using ECOMMERCE.CORE.Entities;
-using System;
+using ECOMMERCE.CORE.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECOMMERCE.CORE.BusinessServices
 {
@@ -37,5 +36,13 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="ordersId"></param>
         /// <returns></returns>
         Orders GetById(int ordersId);
+
+        /// <summary>
+        /// Sipariş oluşturur.
+        /// </summary>
+        /// <param name="customerId">Müşteri Id'si</param>
+        /// <param name="shoppingCarts">Sepetteki sipariş verilecek ürünler</param>
+        /// <returns></returns>
+        ResponseModel<Orders> CreateOrder(int customerId, List<ShoppingCart> shoppingCarts);
     }
 }

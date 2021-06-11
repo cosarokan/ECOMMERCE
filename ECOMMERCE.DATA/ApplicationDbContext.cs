@@ -560,12 +560,12 @@ namespace ECOMMERCE.DATA
                     .IsRequired();
 
                 entity.Property(e => e.ApprovedById)
-                    .HasColumnName("ApprovedBy")
-                    .IsRequired();
+                    .HasColumnName("ApprovedBy");
 
                 entity.Property(e => e.OrderDate)
                     .HasColumnName("OrderDate")
                     .IsRequired()
+                    .HasColumnType("datetime")
                     .IsUnicode(false);
 
                 entity.Property(e => e.TotalAmount)
@@ -575,7 +575,7 @@ namespace ECOMMERCE.DATA
 
                 entity.Property(e => e.ApprovedDate)
                     .HasColumnName("ApprovedDate")
-                    .IsRequired()
+                    .HasColumnType("datetime")
                     .IsUnicode(false);
 
                 entity.HasOne<Customers>(x => x.Customer)

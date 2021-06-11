@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ECOMMERCE.WEBUI.Models.ViewModels;
 using Microsoft.Extensions.Configuration;
-using System.Configuration;
 
 namespace ECOMMERCE.WEBUI.Controllers
 {

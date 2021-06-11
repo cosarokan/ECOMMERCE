@@ -1,8 +1,7 @@
 ﻿using ECOMMERCE.CORE.Entities;
 using ECOMMERCE.CORE.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ECOMMERCE.CORE.BusinessServices.Implementation
 {
@@ -27,9 +26,49 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
             return _shoppingCartRepository.All();
         }
 
+        public List<ShoppingCart> GetAllByCustomerId(int customerId, List<ShoppingCart> currentShoppingCart)
+        {
+            List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetAllByCustomerId(customerId);
+            if (currentShoppingCart != null && currentShoppingCart.Any())
+            {
+                foreach (var shoppingCart in currentShoppingCart)
+                {
+                    if (!shoppingCarts.Any(x => x.ProductId == shoppingCart.ProductId))
+                    {
+                        shoppingCarts.Add(shoppingCart);
+                    }
+                    else if (shoppingCarts.Any(x => x.ProductId == shoppingCart.ProductId))
+                    {
+                        shoppingCarts.First(x => x.ProductId == shoppingCart.ProductId).Quantity = shoppingCart.Quantity;
+                    }
+                }
+                foreach (var item in shoppingCarts)
+                {
+                    if (item.Id == 0)
+                    {
+                        _shoppingCartRepository.Add(item);
+                    }
+                    else
+                    {
+                        _shoppingCartRepository.Update(item);
+                    }
+                }
+            }
+            _unitOfWork.Complete();
+            return shoppingCarts;
+        }
+
         public ShoppingCart GetById(int shoppingCartId)
         {
             return _shoppingCartRepository.FindById(shoppingCartId);
+        }
+
+        public void RemoveFromShoppingCart(int customerId, int productId)
+        {
+            ShoppingCart shoppingCart = _shoppingCartRepository.Where(x => x.CustomerId == customerId && x.ProductId == productId).SingleOrDefault();
+
+            _shoppingCartRepository.Delete(shoppingCart);
+            _unitOfWork.Complete();
         }
 
         public void Save(ShoppingCart shoppingCart)
@@ -42,6 +81,37 @@ namespace ECOMMERCE.CORE.BusinessServices.Implementation
         {
             _shoppingCartRepository.Update(shoppingCart);
             _unitOfWork.Complete();
+        }
+
+        public void UpdateShoppingCarts(int customerId, List<ShoppingCart> currentShoppingCart)
+        {
+            List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetAllByCustomerId(customerId);
+            if (currentShoppingCart != null && currentShoppingCart.Any())
+            {
+                foreach (var shoppingCart in currentShoppingCart)
+                {
+                    if (!shoppingCarts.Any(x => x.ProductId == shoppingCart.ProductId))
+                    {
+                        shoppingCarts.Add(shoppingCart);
+                    }
+                    else if (shoppingCarts.Any(x => x.ProductId == shoppingCart.ProductId))
+                    {
+                        shoppingCarts.First(x => x.ProductId == shoppingCart.ProductId).Quantity = shoppingCart.Quantity;
+                    }
+                }
+                foreach (var item in shoppingCarts)
+                {
+                    if (item.Id == 0)
+                    {
+                        _shoppingCartRepository.Add(item);
+                    }
+                    else
+                    {
+                        _shoppingCartRepository.Update(item);
+                    }
+                }
+                _unitOfWork.Complete();
+            }
         }
     }
 }

@@ -6,7 +6,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>@ViewData["Title"]</title>
-    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet">
     <link href="~/css/prettyPhoto.css" rel="stylesheet">
     <link href="~/css/price-range.css" rel="stylesheet">
@@ -27,12 +28,27 @@
                     <div class="col-md-8 clearfix">
                         <div class="shop-menu clearfix pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="sepeteEkle.html"><i class="fa fa-shopping-cart"></i>Sepetim</a></li>
-                                <li><a href="favoriler.html"><i class="fa fa-star"></i>Favoriler</a></li>
-                                <li><a href="iletisim.html"><i class="fa fa-envelope"></i>İletişim</a></li>
-                                <li><a href="@Context.Request.Scheme://@Context.Request.Host/Login"><i class="fa fa-sign-in"></i>Giriş</a></li>
-
-
+                                <li><a href="@Context.Request.Scheme://@Context.Request.Host/ShoppingCart"><i class="fa fa-shopping-cart"></i>Sepetim</a></li>
+                                <li><a href="@Context.Request.Scheme://@Context.Request.Host/Contact"><i class="fa fa-envelope"></i>İletişim</a></li>
+                                @using Microsoft.AspNetCore.Http;
+                                @inject IHttpContextAccessor HttpContextAccessor
+                                @using ECOMMERCE.WEBUI.Extensions
+                                @{ UserContext user = HttpContextAccessor.HttpContext.Session.Get<UserContext>("UserContext");
+                                    if (user == null)
+                                    {
+                        <li><a href="@Context.Request.Scheme://@Context.Request.Host/Login"><i class="fa fa-sign-in"></i>Giriş</a></li> }
+                                    else
+                                    {
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @user.Name
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" id="btnLogout">Çıkış</a>
+                                </div>
+                            </div>
+                        </li> } }
                             </ul>
                         </div>
                     </div>
@@ -52,10 +68,7 @@
                         <div class="single-widget">
                             <h2>SERVİSLER</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="">Yardım</a></li>
-                                <li><a href=""><a href="iletisim.html">Bize Ulaşın</a></a></li>
-                                <li><a href="">Sipariş Durumu</a></li>
-                                <li><a href="">Yer Değiştir</a></li>
+                                <li><a href="">Bize Ulaşın</></a></li>
                                 <li><a href="">Sık Sorulan Sorular</a></li>
                             </ul>
                         </div>
@@ -67,9 +80,6 @@
                             <ul class="nav nav-pills nav-stacked">
                                 <li><a href="">Kullanım Şartları</a></li>
                                 <li><a href="">Gizlilik Politikası</a></li>
-                                <li><a href="">Geri Ödeme Politikası</a></li>
-                                <li><a href="">Fatura Sistemi</a></li>
-                                <li><a href="">Kupon Sistemi</a></li>
                             </ul>
                         </div>
                     </div>
@@ -86,5 +96,6 @@
     <script src="~/js/jquery.prettyPhoto.js"></script>
     <script type="text/javascript" src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
     <script src="~/js/main.js"></script>
+    <script src="~/scripts/Layout.js"></script>
 </body>
 </html>

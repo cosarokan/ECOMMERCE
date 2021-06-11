@@ -1,41 +1,41 @@
 ﻿@model ECOMMERCE.WEBUI.Models.ViewModels.DetailViewModel
 
-    <script src="~/js/jquery.js"></script>
-    <link href="~/styles/Detail.css" rel="stylesheet" />
-    <script src="~/scripts/Detail.js"></script>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <br><br><br>
-                    <div class="left-sidebar">
-                        <h2>KATEGORİ</h2>
-                        <div class="panel-group category-products" id="accordian">
-                            @foreach (var category in Model.Categories)
-                            {
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#@category.Id">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                <a href="@Context.Request.Scheme://@Context.Request.Host/Products/@category.Code">@category.Name</a>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="@category.Id" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                @foreach (var subCategory in category.SubCategories)
-                                                {
-                                                    <li><a href="@Context.Request.Scheme://@Context.Request.Host/Products/@subCategory.CategoryCode/@subCategory.Code">@subCategory.Name</a></li>
-                                                }
-                                            </ul>
-                                        </div>
+<script src="~/js/jquery.js"></script>
+<link href="~/styles/Detail.css" rel="stylesheet" />
+<script src="~/scripts/Detail.js"></script>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <br><br><br>
+                <div class="left-sidebar">
+                    <h2>KATEGORİ</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        @foreach (var category in Model.Categories)
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#@category.Id">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            <a href="@Context.Request.Scheme://@Context.Request.Host/Products/@category.Code">@category.Name</a>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="@category.Id" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach (var subCategory in category.SubCategories)
+                                            {
+                                                <li><a href="@Context.Request.Scheme://@Context.Request.Host/Products/@subCategory.CategoryCode/@subCategory.Code">@subCategory.Name</a></li>
+                                            }
+                                        </ul>
                                     </div>
                                 </div>
-                            }
+                            </div>
+                        }
 
-                        </div>
+                    </div>
 
                     @{
                         if (Model.ProductTypes != null && Model.ProductTypes.Any())
@@ -47,17 +47,17 @@
                                         <div class="scrollbar" id="style-default">
                                             <div class="force-overflow">
                                                 <form>
-                                                     <div class="form-check">
-                                                         <h5>Ürün Tipi</h5>
-                                                          <table style="width: 100%;">
-                                                             @foreach (var item in Model.ProductTypes)
-                                                             {
-                                                                 <tr>
-                                                                     <td><a style="cursor: pointer;" href="@Context.Request.Scheme://@Context.Request.Host/Products/@item.CategoryCode/@item.SubCategoryCode/@item.Code"><label class="form-check-label" for="flexCheckDefault">@item.Name</label></a></td>
-                                                                 </tr>
-                                                             }
-                                                         </table>
-                                                     </div>
+                                                    <div class="form-check">
+                                                        <h5>Ürün Tipi</h5>
+                                                        <table style="width: 100%;">
+                                                            @foreach (var item in Model.ProductTypes)
+                                                            {
+                                                                <tr>
+                                                                    <td><a style="cursor: pointer;" href="@Context.Request.Scheme://@Context.Request.Host/Products/@item.CategoryCode/@item.SubCategoryCode/@item.Code"><label class="form-check-label" for="flexCheckDefault">@item.Name</label></a></td>
+                                                                </tr>
+                                                            }
+                                                        </table>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -66,91 +66,99 @@
                             </div>
                         }
                     }
-                    </div>
                 </div>
-                <br><br><br><br>
-                <div class="col-sm-9 padding-right">
-                    <div class="product-details">
-                        <div class="col-sm-5">
-                            <div class="view-product">
-                                <img class="img-fluid" src="@Context.Request.Scheme://@Context.Request.Host/@Model.Product.Image" alt="" />
-                            </div>
+            </div>
+            <br><br><br><br>
+            <div class="col-sm-9 padding-right">
+                <div class="product-details">
+                    <div class="col-sm-5">
+                        <div class="view-product">
+                            <img class="img-fluid" src="@Context.Request.Scheme://@Context.Request.Host/@Model.Product.Image" alt="" />
                         </div>
-                        <div class="col-sm-7">
-                            <div class="product-information">
-                                
-                                <h2>@Model.Product.Brand - @Model.Product.Model</h2>
-                                <h2>@Model.Product.Price @Model.Product.Currency</h2>
-                                <div>
-                                    <span>
-                                        <span></span>
-                                        <a href="#"><button class="button" id="sepeteEkleButton" style="float: right;">Sepete Ekle</button></a> <br>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information">
 
-                    </div>
-                    <div class="tab">
-                        <button class="tablinks active" onclick="changeTab(event, 'Ozellikler')">Özellikler</button>
-                        <button class="tablinks" onclick="changeTab(event, 'Yorumlar')">Yorumlar</button>
-                    </div>
-                    <div id="Ozellikler" class="tabcontent" style="display: block;">
-                        <div>
-                            @{
-                                <div class="row">
-                                    <div class="col-12" style="padding: 50px">
-                                        <table class="table table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Marka</td>
-                                                    <td>@Model.Product.Brand</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Model</td>
-                                                    <td>@Model.Product.Model</td>
-                                                </tr>
-                                                @foreach (var item in Model.Product.ProductProperties)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Property</td>
-                                                        <td><b>@item.Value</b></td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            }
+                            <h2>@Model.Product.Brand - @Model.Product.Model</h2>
+                            <h2>@Model.Product.Price @Model.Product.Currency</h2>
+                            <div>
+                                <span>
+                                    <span></span>
+                                    <a href="#"><button class="button" id="sepeteEkleButton" style="float: right;">Sepete Ekle</button></a> <br>
+                                </span>
+                            </div>
                         </div>
                     </div>
 
-                    <div id="Yorumlar" class="tabcontent">
+                </div>
+                <div class="tab">
+                    <button class="tablinks active" onclick="changeTab(event, 'Ozellikler')">Özellikler</button>
+                    <button class="tablinks" onclick="changeTab(event, 'Yorumlar')">Yorumlar</button>
+                </div>
+                <div id="Ozellikler" class="tabcontent" style="display: block;">
+                    <div>
                         @{
-                            foreach (var item in Model.Product.Comments)
-                            {
-                                <div class="tab-pane fade active in" id="reviews">
-                                    <ul>
-                                        <br>
-                                        <li><a href=""><i class="fa fa-user"></i>@item.CommentedBy</a></li>
-                                        <li><a href=""><i class="fa fa-clock-o"></i>@item.CommentedDate.ToString("HH:mm")</a></li>
-                                        <li><a href=""><i class="fa fa-calendar-o"></i>@item.CommentedDate.ToString("dd MMMM yyyy")</a></li>
-                                    </ul>
-                                    <p>@item.Comment</p>
-                                    <div class="status alert alert-success" style="display: none"></div>
-                                    <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
-                                        <div class="form-group col-md-12">
-                                            <textarea name="message" id="message" class="form-control" rows="8" placeholder="Mesajınız"></textarea>
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <input type="submit" name="submit" class="btn btn-primary pull-right" value="Paylaş">
-                                        </div>
-                                    </form>
+                            <div class="row">
+                                <div class="col-12" style="padding: 50px">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td>Marka</td>
+                                                <td>@Model.Product.Brand</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Model</td>
+                                                <td>@Model.Product.Model</td>
+                                            </tr>
+                                            @foreach (var item in Model.Product.ProductProperties)
+                                            {
+                                                <tr>
+                                                    <td>@item.Property</td>
+                                                    <td><b>@item.Value</b></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
-                            }
+                            </div>
                         }
                     </div>
                 </div>
+
+                <div id="Yorumlar" class="tabcontent">
+                    @using Microsoft.AspNetCore.Http;
+                    @inject IHttpContextAccessor HttpContextAccessor
+                    @using ECOMMERCE.WEBUI.Extensions
+                    @{
+                        foreach (var item in Model.Product.Comments)
+                        {
+                            <div class="tab-pane fade active in" id="reviews">
+                                <ul>
+                                    <br>
+                                    <li><a href=""><i class="fa fa-user"></i>@item.CommentedBy</a></li>
+                                    <li><a href=""><i class="fa fa-clock-o"></i>@item.CommentedDate.ToString("HH:mm")</a></li>
+                                    <li><a href=""><i class="fa fa-calendar-o"></i>@item.CommentedDate.ToString("dd MMMM yyyy")</a></li>
+                                </ul>
+                                <p>@item.Comment</p>
+                                <div class="status alert alert-success" style="display: none"></div>
+                            </div>
+                        }
+
+                        UserContext user = HttpContextAccessor.HttpContext.Session.Get<UserContext>("UserContext");
+                        if (user != null && user.OrderProductIds.Contains(Model.Product.Id))
+                        {
+                            <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+                                <div class="form-group col-md-12">
+                                    <textarea name="message" id="message" class="form-control" rows="8" placeholder="Mesajınız"></textarea>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="button" name="submit" class="btn btn-primary pull-right" value="Kaydet" id="btnSaveComment" productId="@Model.Product.Id">
+                                </div>
+                            </form>
+                        }
+                    }
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>

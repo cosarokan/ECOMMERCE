@@ -55,17 +55,39 @@ function buildProducts(data) {
                             '<a href="' + item.url + '"><img class="img-fluid" src="' +item.imageSrc+ '" alt="" /></a>'+
                             '<h2>' + item.price + ' ' + item.currency +'</h2>'+
                             '<p>' + item.brand + ' ' +  item.model +'</p>'+
-                            '<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>'+
+                            '<a class="btn btn-default add-to-cart" id="' + item.id + '"><i class="fa fa-shopping-cart"></i>Sepete Ekle</a>'+
                         '</div>'+
                     '</div>'+
                     '<div class="choose">'+
                         '<ul class="nav nav-pills nav-justified">'+
-                            '<li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>'+
-                            '<li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>'+
                         '</ul>'+
                     '</div>'+
                 '</div>'+
             '</div>';
     }
     $('#products_area').empty().append(products);
+
+    $('.add-to-cart').on('click', function () {
+        addToShoppingCart($(this).attr('id'));
+    });
+}
+
+var addToShoppingCart = function (productId) {
+    var param = { productId: productId };
+
+    $.ajax({
+        type: "POST",
+        url: "/Product/AddToShoppingCart",
+        contentType: "application/x-www-form-urlencoded",
+        data: param,
+        dataType: 'json',
+        success: function (response) {
+            if (response.data) {
+                alert('Ürün sepetinize eklenmiştir.');
+            }
+        },
+        error: function (xhr, err) {
+            alert(JSON.parse(xhr.responseText).Message);
+        }
+    });
 }

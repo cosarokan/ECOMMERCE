@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="width: 100%;">
+    <div class="col-sm-8 col-sm-offset-2 " style="width: 100%;">
+        <table class="table table-hover ">
+            <thead>
+            <th class="text-center">Ürün Adı</th>
+            <th class="text-center">Ürün Fiyatı</th>
+            <th class="text-center">Ürün Adeti</th>
+            <th class="text-center">Sepetten Çıkar</th>
+            </thead>
+            <tbody>
+                @using Microsoft.AspNetCore.Http;
+                @inject IHttpContextAccessor HttpContextAccessor
+                @using ECOMMERCE.WEBUI.Extensions
+                @{
+                    List<ShoppingCartItemModel> shoppingCartItemModels = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCartItemModel>>("ShoppingCart");
+                    if (shoppingCartItemModels != null)
+                    {
+                        foreach (ShoppingCartItemModel shoppingCartItem in shoppingCartItemModels)
+                        {
+                            <tr>
+                                <td class="text-center" style="width: 120px" id="sepeteEkleUrunIsım">@shoppingCartItem.Name</td>
+                                <td class="text-center" style="width: 120px" id="sepeteEkleUrunFiyat">@shoppingCartItem.Price TL</td>
+                                <td class="text-center" style="width: 120px">
+                                    <div class="cart_quantity_button" style="padding-left: 40px;">
+                                        <a class="cart_quantity_down" productId="@shoppingCartItem.Id"> - </a>
+                                        <input class="cart_quantity_input" id="@shoppingCartItem.Id" type="text" disabled="disabled" name="quantity" value="@shoppingCartItem.Quantity" autocomplete="off" size="2">
+                                        <a class="cart_quantity_up" productId="@shoppingCartItem.Id"> + </a>
+                                    </div>
+                                </td>
+                                <td class="text-center" style="width: 120px">
+                                    <a title="Sepetten Kaldır"><i id="btnRemoveFromShoppingCart" productId="@shoppingCartItem.Id" class="fa fa-trash-o" aria-hidden="true" style="font-size: 25px; color: black"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+            @{
+                @if (shoppingCartItemModels != null)
+                {
+                    <tfoot>
+                    <th colspan="2" class="text-right">
+                        Toplam Ürün : <span id="sepeteEkleAdetText">@shoppingCartItemModels.Count Adet</span>
+                    </th>
+                    <th colspan="4" class="text-right">
+                        Toplam Tutar : <span id="sepeteEkleFiyatText">@shoppingCartItemModels.Sum(x => x.TotalPrice) TL</span><br><br>
+                        <a href="@Context.Request.Scheme://@Context.Request.Host/Payment"><button class="button btn-success">Ödeme Sayfasına Git</button></a>
+                    </th>
+                    </tfoot>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+<script src="~/js/jquery.js"></script>
+<script src="~/scripts/ShoppingCart.js"></script>

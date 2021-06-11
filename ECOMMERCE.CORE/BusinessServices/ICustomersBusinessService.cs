@@ -1,7 +1,6 @@
 ﻿using ECOMMERCE.CORE.Entities;
-using System;
+using ECOMMERCE.CORE.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECOMMERCE.CORE.BusinessServices
 {
@@ -11,7 +10,7 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// Müşteri kaydetme işlemini yapar.
         /// </summary>
         /// <param name="customers"></param>
-        void Save(Customers customers);
+        ResponseModel<object> Save(Customers customers);
 
         /// <summary>
         /// Müşteri güncelleme işlemini yapar.
@@ -37,5 +36,20 @@ namespace ECOMMERCE.CORE.BusinessServices
         /// <param name="customerId"></param>
         /// <returns></returns>
         Customers GetById(int customerId);
+
+        /// <summary>
+        /// Email adresine göre kullanıcıyı aktifleştirir
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        ResponseModel<object> AcivateCustomerByEmailAddress(string emailAddress);
+
+        /// <summary>
+        /// Kullanıcı login ekranı
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        ResponseModel<Customers> Login(string emailAddress, string password);
     }
 }

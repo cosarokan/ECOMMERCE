@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="cart_items">
+    <div class="container">
+        <div class="register-req">
+            <p>*Sipariş geçmişi ve daha fazlası için kayıt olup satın alın ya da üye olmadan satın al seçeneğini kullanın.</p>
+        </div>
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-xs-12 clearfix">
+                    <div class="bill-to">
+                        <p>Satın Alma ve Fatura Bilgileri</p>
+                        <div class="col-xs-12">
+                            <div class="col-xs-6">
+                                <div class="form-group owner col-xs-6">
+                                    <label>Ad Soyad</label>
+                                    <input type="text" class="form-control" id="shopName">
+                                </div>
+                                <div class="form-group CVV col-xs-6">
+                                    <label>Telefon</label>
+                                    <input type="tel" class="form-control" placeholder="( ___ ) ___ __ __" id="shopTel">
+                                </div>
+                                <div class="form-group col-sm-12 col-xs-12">
+                                    <label>Adres</label>
+                                    <input type="text" class="form-control" id="shopAddress">
+                                </div>
+                                <div class="col-sm-6">
+                                    <span>Şehir</span>
+                                    <select>
+                                        <option value="01">Ocak</option>
+                                        <option value="02">Şubat</option>
+                                        <option value="03">Mart</option>
+                                        <option value="04">Nisan</option>
+                                        <option value="05">Mayıs</option>
+                                        <option value="06">Haziran</option>
+                                        <option value="07">Temmuz</option>
+                                        <option value="08">Ağustos</option>
+                                        <option value="09">Eylül</option>
+                                        <option value="10">Ekim</option>
+                                        <option value="11">Kasım</option>
+                                        <option value="12">Aralık</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span>İlçe</span>
+                                    <select>
+                                        <option value="22">2022</option>
+                                        <option value="23">2023</option>
+                                        <option value="24">2024</option>
+                                        <option value="25">2025</option>
+                                        <option value="26">2026</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="payment col-xs-6">
+
+                                <div class="form-group owner col-sm-9 col-xs-9">
+                                    <label>Kart Sahibi</label>
+                                    <input type="text" class="form-control" id="cartOwner">
+                                </div>
+                                <div class="form-group CVV col-sm-3 col-xs-3">
+
+                                    <label>CVV</label>
+                                    <input type="text" class="form-control" id="cartCVV">
+                                </div>
+                                <div class="form-group col-sm-12 col-xs-12">
+                                    <label>Kart Numarası</label>
+                                    <input type="text" class="form-control" id="cartNumber">
+                                </div>
+
+
+                                <div class="form-group" id="expirationDate">
+                                    <div class="col-xs-12">
+                                        <span>Son Kullanım Tarihi</span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select>
+                                            <option value="01">Ocak</option>
+                                            <option value="02">Şubat</option>
+                                            <option value="03">Mart</option>
+                                            <option value="04">Nisan</option>
+                                            <option value="05">Mayıs</option>
+                                            <option value="06">Haziran</option>
+                                            <option value="07">Temmuz</option>
+                                            <option value="08">Ağustos</option>
+                                            <option value="09">Eylül</option>
+                                            <option value="10">Ekim</option>
+                                            <option value="11">Kasım</option>
+                                            <option value="12">Aralık</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select>
+                                            <option value="22">2022</option>
+                                            <option value="23">2023</option>
+                                            <option value="24">2024</option>
+                                            <option value="25">2025</option>
+                                            <option value="26">2026</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="review-payment">
+            <h2>İnceleme ve Ödeme</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 " style="display: flex;justify-content:center;">
+                <table class="table table-hover" style="width: 850px;">
+                    <thead>
+                    <th class="text-center">Ürün Adı</th>
+                    <th class="text-center">Ürün Fiyatı</th>
+                    </thead>
+
+                    <tbody>
+                        @using Microsoft.AspNetCore.Http;
+                        @inject IHttpContextAccessor HttpContextAccessor
+                        @using ECOMMERCE.WEBUI.Extensions
+                        @{
+                            List<ShoppingCartItemModel> shoppingCartItemModels = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCartItemModel>>("ShoppingCart");
+                            if (shoppingCartItemModels != null)
+                            {
+                                foreach (ShoppingCartItemModel shoppingCartItem in shoppingCartItemModels)
+                                {
+                                    <tr>
+                                        <td class="text-center" style="width: 120px">@shoppingCartItem.Name</td>
+                                        <td class="text-center" style="width: 120px">@shoppingCartItem.Price TL</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+
+                    @{
+                        @if (shoppingCartItemModels != null)
+                        {
+                            <tfoot>
+                            <th colspan="2" class="text-right">
+                                Toplam Ürün : <span>@shoppingCartItemModels.Count Adet</span>
+                            </th>
+                            <th colspan="4" class="text-right">
+                                Toplam Tutar : <span>@shoppingCartItemModels.Sum(x => x.TotalPrice) TL</span> <br><br>
+                                <button class="button btn-success" id="btnPay">Ödeme Yap</button>
+                            </th>
+                            </tfoot>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<script src="~/js/jquery.js"></script>
+<script src="~/scripts/Payment.js"></script>

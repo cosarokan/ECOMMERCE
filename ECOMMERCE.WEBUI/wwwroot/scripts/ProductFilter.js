@@ -132,8 +132,6 @@ function buildProducts(data) {
             '</div>' +
             '<div class="choose">' +
             '<ul class="nav nav-pills nav-justified">' +
-            '<li><a href="#"><i class="fa fa-plus-square"></i>Favorilere Ekle</a></li>' +
-            '<li><a href="#"><i class="fa fa-plus-square"></i>Karşılaştır</a></li>' +
             '</ul>' +
             '</div>' +
             '</div>' +

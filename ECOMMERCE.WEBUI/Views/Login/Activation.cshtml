@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+@model ResponseViewModel
 
 <!DOCTYPE html>
 
@@ -11,6 +12,15 @@
     <title>Activation</title>
 </head>
 <body>
-    Üyeliğiniz aktif edilmiştir. Giriş için <a href="@Context.Request.Scheme://@Context.Request.Host/Login" style="cursor: pointer;">tıklayınız..</a>
+    <center>
+        @if (!Model.IsSuccess)
+        {
+            @Model.Message;
+            return;
+        }
+
+        Üyeliğiniz aktif edilmiştir.Giriş için<a href="@Context.Request.Scheme://@Context.Request.Host/Login" style="cursor: pointer;"> tıklayınız.. </a>
+    </center>
+
 </body>
 </html>

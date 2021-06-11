@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECOMMERCE.DATA", "ECOMMERCE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECOMMERCE.WEBUI", "ECOMMERCE.WEBUI\ECOMMERCE.WEBUI.csproj", "{0AC4F3F9-8CB3-4C58-B5B6-A0D22DE33F76}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseScripts", "DatabaseScripts", "{866788DF-F2FC-492B-91B6-7C07DB6F504A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

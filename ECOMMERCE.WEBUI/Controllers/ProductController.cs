@@ -1,6 +1,7 @@
 ﻿using ECOMMERCE.CORE.BusinessServices;
 using ECOMMERCE.CORE.Entities;
 using ECOMMERCE.CORE.Models;
+using ECOMMERCE.WEBUI.Extensions;
 using ECOMMERCE.WEBUI.Models;
 using ECOMMERCE.WEBUI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +19,19 @@ namespace ECOMMERCE.WEBUI.Controllers
         private readonly ICategoriesBusinessService _categoriesBusinessService;
         private readonly IProductTypesBusinessService _productTypesBusinessService;
         private readonly IProductPropertiesBusinessService _productPropertiesBusinessService;
+        private readonly IShoppingCartBusinessService _shoppingCartBusinessService;
+        private readonly ICommentBusinessService _commentBusinessService;
         private readonly IConfiguration _iConfig;
 
-        public ProductController(IConfiguration iConfig, IProductBusinessService productBusinessService, ICategoriesBusinessService categoriesBusinessService, IProductTypesBusinessService productTypesBusinessService, IProductPropertiesBusinessService productPropertiesBusinessService)
+        public ProductController(IConfiguration iConfig, IProductBusinessService productBusinessService, ICategoriesBusinessService categoriesBusinessService, IProductTypesBusinessService productTypesBusinessService, IProductPropertiesBusinessService productPropertiesBusinessService, IShoppingCartBusinessService shoppingCartBusinessService, ICommentBusinessService commentBusinessService)
         {
             _iConfig = iConfig;
             _productBusinessService = productBusinessService;
             _categoriesBusinessService = categoriesBusinessService;
             _productTypesBusinessService = productTypesBusinessService;
             _productPropertiesBusinessService = productPropertiesBusinessService;
+            _shoppingCartBusinessService = shoppingCartBusinessService;
+            _commentBusinessService = commentBusinessService;
         }
 
         [Route("Products")]
@@ -153,7 +158,6 @@ namespace ECOMMERCE.WEBUI.Controllers
         public IActionResult ProductFilter(string categoryCode, string subCategoryCode, string productTypeCode)
         {
             ProductFilterViewModel productViewModel = new ProductFilterViewModel();
-
             List<Product> products = _productBusinessService.GetAllWithBrandByProductType(categoryCode, subCategoryCode, productTypeCode);
             List<Categories> categories = _categoriesBusinessService.GetAllWithSubCategories();
             List<ProductTypes> productTypes = _productTypesBusinessService.GetAllBySubCategory(subCategoryCode);
@@ -302,6 +306,87 @@ namespace ECOMMERCE.WEBUI.Controllers
             return Json(new { Data = productCount });
         }
 
+        [HttpPost]
+        public ActionResult AddToShoppingCart(int productId)
+        {
+            List<ShoppingCartItemModel> shoppingCarts = new List<ShoppingCartItemModel>();
 
+            Product product = _productBusinessService.GetByIdWithDetails(productId);
+            ShoppingCartItemModel shoppingCartItem = new ShoppingCartItemModel
+            {
+                Id = product.Id,
+                Name = $"{product.BrandModel.Brand.Name} {product.BrandModel.Name}",
+                Price = product.Price,
+                Quantity = 1
+            };
+
+            if (HttpContext.Session.Get<List<ShoppingCartItemModel>>("ShoppingCart") != null)
+            {
+                shoppingCarts = HttpContext.Session.Get<List<ShoppingCartItemModel>>("ShoppingCart");
+                if (shoppingCarts.Any(x => x.Id == productId))
+                {
+                    shoppingCarts.First(x => x.Id == productId).Quantity++;
+                }
+                else
+                {
+                    shoppingCarts.Add(shoppingCartItem);
+                }
+                HttpContext.Session.Set<List<ShoppingCartItemModel>>("ShoppingCart", shoppingCarts);
+            }
+            else
+            {
+                shoppingCarts.Add(shoppingCartItem);
+                HttpContext.Session.Set<List<ShoppingCartItemModel>>("ShoppingCart", shoppingCarts);
+            }
+
+            if (HttpContext.Session.Get<UserContext>("UserContext") != default)
+            {
+                UserContext userContext = HttpContext.Session.Get<UserContext>("UserContext");
+
+                List<ShoppingCart> currentShoppingCarts = shoppingCarts.Select(x => new ShoppingCart
+                {
+                    CustomerId = userContext.Id,
+                    ProductId = x.Id,
+                    Quantity = x.Quantity,
+                    AddDate = DateTime.Now
+                }).ToList();
+
+                _shoppingCartBusinessService.UpdateShoppingCarts(userContext.Id, currentShoppingCarts);
+            }
+            return Json(new { Data = true });
+        }
+
+        [HttpPost]
+        public IActionResult SaveComment(int productId, string commentText)
+        {
+            ResponseViewModel response = new ResponseViewModel();
+            if (HttpContext.Session.Get<UserContext>("UserContext") == null)
+            {
+                response.IsSuccess = false;
+                response.Message = "Yorum yazabilmek için oturum açmalısınız.";
+                return Json(response);
+            }
+
+            UserContext userContext = HttpContext.Session.Get<UserContext>("UserContext");
+
+            Comment comment = new Comment
+            {
+                ApprovedById = 1,
+                ApprovedDate = DateTime.Now,
+                CommentDate = DateTime.Now,
+                CommentText = commentText,
+                CustomerId = userContext.Id,
+                IsApproved = true,
+                ProductId = productId,
+                Title = $"{userContext.Name} Kullanıcı Yorumu"
+            };
+
+            _commentBusinessService.Save(comment);
+
+            response.IsSuccess = true;
+            response.Message = "Yorumunuz başarıyla kaydedilmiştir.";
+
+            return Json(response);
+        }
     }
 }
